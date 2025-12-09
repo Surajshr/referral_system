@@ -1,0 +1,54 @@
+name: referral_app
+description: A referral app that lets users easily invite friends, track referrals, and earn rewards for every successful signup
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.9.0
+  flutter: ^3.35.0
+
+dependencies:
+  bloc: ^9.0.1
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.1.1
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  flutter_native_splash: ^2.4.7
+  flutter_launcher_icons: ^0.14.4
+  get_it: ^9.2.0
+  go_router: ^17.0.0
+  flutter_screenutil: ^5.9.3
+  flutter_secure_storage: ^9.2.4
+  connectivity_plus: ^7.0.0
+  dartz: ^0.10.1
+  dio: ^5.9.0
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+  freezed: ^3.2.3
+  formz: ^0.8.0
+
+dev_dependencies:
+  bloc_test: ^10.0.0
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  build_runner: ^2.10.4
+  
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - assets/images/
+  fonts:
+    - family: Urbanist
+      fonts:
+        - asset: assets/fonts/Urbanist-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Urbanist-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Urbanist-Bold.ttf
+          weight: 700
+  
