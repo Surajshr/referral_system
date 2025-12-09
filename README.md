@@ -32,7 +32,7 @@ _\*Referral App works on iOS, Android, Web, and Windows._
 ## Working with Translations 
 
 
-This project relies on [flutter_localizations][flutter_localizations_link] and follows the [official internationalization guide for Flutter][internationalization_link].
+This project relies on flutter_localization and follows the official internationalization guide for Flutter.
 
 Note: This project is not using translations yet. it is just a sample and shows how to add translations to a project.
 
