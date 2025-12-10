@@ -26,9 +26,11 @@ dependencies:
   dio: ^5.9.0
   freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
-  freezed: ^3.2.3
   formz: ^0.8.0
-  supabase: ^2.10.0
+
+  uuid: ^4.5.2
+  supabase_flutter: ^2.10.3
+  crypto: ^3.0.3
 
 dev_dependencies:
   bloc_test: ^10.0.0
@@ -36,6 +38,8 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^1.0.4
   build_runner: ^2.10.4
+  freezed: ^3.2.3
+  json_serializable: ^6.8.0
   
 
 flutter:
