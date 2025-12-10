@@ -4,8 +4,8 @@ version: 1.0.0+1
 publish_to: none
 
 environment:
-  sdk: ^3.9.0
-  flutter: ^3.35.0
+  sdk: ^3.10.0
+  flutter: ^3.38.0
 
 dependencies:
   bloc: ^9.0.1
@@ -28,6 +28,7 @@ dependencies:
   json_annotation: ^4.9.0
   freezed: ^3.2.3
   formz: ^0.8.0
+  supabase: ^2.10.0
 
 dev_dependencies:
   bloc_test: ^10.0.0

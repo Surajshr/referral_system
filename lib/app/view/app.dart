@@ -1,39 +1,57 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:referral_app/app/cubit/theme_cubit.dart';
 import 'package:referral_app/app/view/app_imports.dart';
+import 'package:referral_app/app/view/app_providers.dart';
+import 'package:referral_app/core/constants/environment_constants.dart';
 import 'package:referral_app/feature/auth/signIn/presentation/view/signin_base_view.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  const App({super.key, required this.environment});
+  final Environment environment;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ThemeCubit(),
+    return AppProviders(
       child: Directionality(
         textDirection: TextDirection.ltr,
-        child: ScreenUtilInit(
-          designSize: const Size(
-            AppConstants.kAppWidth,
-            AppConstants.kAppHeight,
-          ),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (context, child) {
-            return BlocBuilder<ThemeCubit, ThemeMode>(
-              builder: (context, themeMode) {
-                return MaterialApp(
-                  theme: _buildTheme(Brightness.light),
-                  darkTheme: _buildTheme(Brightness.dark),
-                  themeMode: themeMode,
-                  localizationsDelegates:
-                      AppLocalizations.localizationsDelegates,
-                  supportedLocales: AppLocalizations.supportedLocales,
-                  home: const SignInBaseView(),
+        child: Stack(
+          alignment: Alignment.topRight,
+
+          children: [
+            ScreenUtilInit(
+              designSize: const Size(
+                AppConstants.kAppWidth,
+                AppConstants.kAppHeight,
+              ),
+              minTextAdapt: true,
+              splitScreenMode: true,
+              builder: (context, child) {
+                return BlocBuilder<ThemeCubit, ThemeMode>(
+                  builder: (context, themeMode) {
+                    return MaterialApp(
+                      theme: _buildTheme(Brightness.light),
+                      darkTheme: _buildTheme(Brightness.dark),
+                      themeMode: themeMode,
+                      localizationsDelegates:
+                          AppLocalizations.localizationsDelegates,
+                      supportedLocales: AppLocalizations.supportedLocales,
+                      home: const SignInBaseView(),
+                    );
+                  },
                 );
               },
-            );
-          },
+            ),
+
+            if (environment == Environment.dev ||
+                environment == Environment.stag)
+              Banner(
+                message: environment.name.toUpperCase(),
+                location: BannerLocation.topEnd,
+                color: environment == Environment.dev
+                    ? Colors.red
+                    : Colors.blue,
+              ),
+          ],
         ),
       ),
     );

@@ -1,6 +1,11 @@
 import 'package:referral_app/app/app.dart';
 import 'package:referral_app/bootstrap.dart';
+import 'package:referral_app/core/constants/environment_constants.dart';
+import 'package:referral_app/start_up.dart';
 
 Future<void> main() async {
-  await bootstrap(() => const App());
+  EnvironmentConstants.setEnvVariables(Environment.prod);
+  await initializeApp();
+
+  await bootstrap(() => const App(environment: Environment.prod));
 }

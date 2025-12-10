@@ -1,4 +1,4 @@
-enum Environment { dev, uat, prod }
+enum Environment { dev, stag, prod }
 
 class EnvironmentConstants {
   static late String baseUrl = '';
@@ -13,7 +13,7 @@ class EnvironmentConstants {
         baseUrl = 'https://api.referral.com/';
         //urls depend on prod env
         break;
-      case Environment.uat:
+      case Environment.stag:
         baseUrl = 'https://api.referral.com/';
         //urls depend on uat env
         break;
