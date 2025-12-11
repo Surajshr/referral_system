@@ -1,0 +1,6 @@
+class RouteName {
+  static const String splashBaseScreen = '/splash-base-screen';
+  static const String signInBaseScreen = '/sign-in-base-screen';
+  static const String signUpBaseScreen = '/sign-up-base-screen';
+  static const String dashboardBaseScreen = '/dashboard-base-screen';
+}

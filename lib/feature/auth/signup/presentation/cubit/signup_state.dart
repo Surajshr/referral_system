@@ -1,4 +1,4 @@
-part of 'signin_cubit.dart';
+part of 'signup_cubit.dart';
 
 enum ApiRequestStates { initial, loading, success, error }
 
@@ -10,11 +10,13 @@ enum ApiRequestStates { initial, loading, success, error }
 // }
 
 @freezed
-abstract class SignInState with _$SignInState {
-  const factory SignInState({
+abstract class SignUpState with _$SignUpState {
+  const factory SignUpState({
     @Default(ApiRequestStates.initial) ApiRequestStates? status,
     @Default('') String? message,
+    @Default(NameFormz.pure()) NameFormz fullName,
     @Default(EmailFormz.pure()) EmailFormz email,
     @Default(PasswordFormz.pure()) PasswordFormz password,
-  }) = _SignInState;
+    @Default(PhoneNumberFormz.pure()) PhoneNumberFormz phone,
+  }) = _SignUpState;
 }

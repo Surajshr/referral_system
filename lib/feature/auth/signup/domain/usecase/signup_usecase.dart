@@ -1,9 +1,8 @@
-import 'package:dartz/dartz.dart';
-import 'package:referral_app/feature/auth/signIn/domain/repository/signin_repository.dart';
+import 'package:referral_app/feature/auth/signup/domain/repository/signup_repository.dart';
 
-class SignInUseCase {
-  SignInUseCase(this._repository);
-  final SignInRepository _repository;
+class SignUpUseCase {
+  SignUpUseCase(this._repository);
+  final SignUpRepository _repository;
 
   // Future<Either<SignInModel, Failure>> signIn({
   //   required String email,

@@ -1,9 +1,10 @@
-import 'dart:io';
+import 'package:referral_app/feature/auth/signup/domain/repository/signup_repository.dart';
+import 'package:referral_app/shared/domain/repositories/auth_repository.dart';
 
-import 'package:dartz/dartz.dart';
-import 'package:referral_app/feature/auth/signIn/domain/repository/login_repository.dart';
-
-class SignInRepositoryImpl implements SignInRepository {
+class SignUpRepositoryImpl implements SignUpRepository {
+  final AuthRepository _authRepository;
+  SignUpRepositoryImpl({required AuthRepository authRepository})
+    : _authRepository = authRepository;
   // final BaseClient _client;
   // SignInRepositoryImpl(this._client);
 

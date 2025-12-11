@@ -1,6 +1,12 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:referral_app/core/services/storage/secure_storage_service.dart';
+import 'package:referral_app/feature/auth/signIn/data/repository_impl/signin_repository_impl.dart';
+import 'package:referral_app/feature/auth/signIn/domain/repository/signin_repository.dart';
+import 'package:referral_app/feature/auth/signIn/domain/usecase/signin_usecase.dart';
+import 'package:referral_app/feature/auth/signup/data/repository_impl/signup_repository_impl.dart';
+import 'package:referral_app/feature/auth/signup/domain/repository/signup_repository.dart';
+import 'package:referral_app/feature/auth/signup/domain/usecase/signup_usecase.dart';
 import 'package:referral_app/shared/data/repositories/auth_repository_impl.dart';
 import 'package:referral_app/shared/data/repositories/referral_repository_impl.dart';
 import 'package:referral_app/shared/data/repositories/reward_trigger_repository_impl.dart';
@@ -57,6 +63,23 @@ void _registerRepositories() {
       transactionRepository: di<TransactionRepository>(),
       referralRepository: di<ReferralRepository>(),
     ),
+  );
+
+  di.registerLazySingleton<SignInRepository>(
+    () => SignInRepositoryImpl(authRepository: di<AuthRepository>()),
+  );
+
+  // Register SignInUseCase
+  di.registerLazySingleton<SignInUseCase>(
+    () => SignInUseCase(di<SignInRepository>()),
+  );
+  // Register SignUpRepository
+  di.registerLazySingleton<SignUpRepository>(
+    () => SignUpRepositoryImpl(authRepository: di<AuthRepository>()),
+  );
+  // Register SignUpUseCase
+  di.registerLazySingleton<SignUpUseCase>(
+    () => SignUpUseCase(di<SignUpRepository>()),
   );
 }
 

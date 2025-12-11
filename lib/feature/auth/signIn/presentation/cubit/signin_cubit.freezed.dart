@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SignInState implements DiagnosticableTreeMixin {
 
- ApiRequestStates? get status; String? get message;
+ ApiRequestStates? get status; String? get message; EmailFormz get email; PasswordFormz get password;
 /// Create a copy of SignInState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,21 +26,21 @@ $SignInStateCopyWith<SignInState> get copyWith => _$SignInStateCopyWithImpl<Sign
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'SignInState'))
-    ..add(DiagnosticsProperty('status', status))..add(DiagnosticsProperty('message', message));
+    ..add(DiagnosticsProperty('status', status))..add(DiagnosticsProperty('message', message))..add(DiagnosticsProperty('email', email))..add(DiagnosticsProperty('password', password));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignInState&&(identical(other.status, status) || other.status == status)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignInState&&(identical(other.status, status) || other.status == status)&&(identical(other.message, message) || other.message == message)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,message);
+int get hashCode => Object.hash(runtimeType,status,message,email,password);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'SignInState(status: $status, message: $message)';
+  return 'SignInState(status: $status, message: $message, email: $email, password: $password)';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $SignInStateCopyWith<$Res>  {
   factory $SignInStateCopyWith(SignInState value, $Res Function(SignInState) _then) = _$SignInStateCopyWithImpl;
 @useResult
 $Res call({
- ApiRequestStates? status, String? message
+ ApiRequestStates? status, String? message, EmailFormz email, PasswordFormz password
 });
 
 
@@ -68,11 +68,13 @@ class _$SignInStateCopyWithImpl<$Res>
 
 /// Create a copy of SignInState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = freezed,Object? message = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = freezed,Object? message = freezed,Object? email = null,Object? password = null,}) {
   return _then(_self.copyWith(
 status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as ApiRequestStates?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as EmailFormz,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as PasswordFormz,
   ));
 }
 
@@ -157,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ApiRequestStates? status,  String? message)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ApiRequestStates? status,  String? message,  EmailFormz email,  PasswordFormz password)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SignInState() when $default != null:
-return $default(_that.status,_that.message);case _:
+return $default(_that.status,_that.message,_that.email,_that.password);case _:
   return orElse();
 
 }
@@ -178,10 +180,10 @@ return $default(_that.status,_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ApiRequestStates? status,  String? message)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ApiRequestStates? status,  String? message,  EmailFormz email,  PasswordFormz password)  $default,) {final _that = this;
 switch (_that) {
 case _SignInState():
-return $default(_that.status,_that.message);case _:
+return $default(_that.status,_that.message,_that.email,_that.password);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +200,10 @@ return $default(_that.status,_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ApiRequestStates? status,  String? message)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ApiRequestStates? status,  String? message,  EmailFormz email,  PasswordFormz password)?  $default,) {final _that = this;
 switch (_that) {
 case _SignInState() when $default != null:
-return $default(_that.status,_that.message);case _:
+return $default(_that.status,_that.message,_that.email,_that.password);case _:
   return null;
 
 }
@@ -213,11 +215,13 @@ return $default(_that.status,_that.message);case _:
 
 
 class _SignInState with DiagnosticableTreeMixin implements SignInState {
-  const _SignInState({this.status = ApiRequestStates.initial, this.message = ''});
+  const _SignInState({this.status = ApiRequestStates.initial, this.message = '', this.email = const EmailFormz.pure(), this.password = const PasswordFormz.pure()});
   
 
 @override@JsonKey() final  ApiRequestStates? status;
 @override@JsonKey() final  String? message;
+@override@JsonKey() final  EmailFormz email;
+@override@JsonKey() final  PasswordFormz password;
 
 /// Create a copy of SignInState
 /// with the given fields replaced by the non-null parameter values.
@@ -230,21 +234,21 @@ _$SignInStateCopyWith<_SignInState> get copyWith => __$SignInStateCopyWithImpl<_
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'SignInState'))
-    ..add(DiagnosticsProperty('status', status))..add(DiagnosticsProperty('message', message));
+    ..add(DiagnosticsProperty('status', status))..add(DiagnosticsProperty('message', message))..add(DiagnosticsProperty('email', email))..add(DiagnosticsProperty('password', password));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignInState&&(identical(other.status, status) || other.status == status)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignInState&&(identical(other.status, status) || other.status == status)&&(identical(other.message, message) || other.message == message)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,message);
+int get hashCode => Object.hash(runtimeType,status,message,email,password);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'SignInState(status: $status, message: $message)';
+  return 'SignInState(status: $status, message: $message, email: $email, password: $password)';
 }
 
 
@@ -255,7 +259,7 @@ abstract mixin class _$SignInStateCopyWith<$Res> implements $SignInStateCopyWith
   factory _$SignInStateCopyWith(_SignInState value, $Res Function(_SignInState) _then) = __$SignInStateCopyWithImpl;
 @override @useResult
 $Res call({
- ApiRequestStates? status, String? message
+ ApiRequestStates? status, String? message, EmailFormz email, PasswordFormz password
 });
 
 
@@ -272,11 +276,13 @@ class __$SignInStateCopyWithImpl<$Res>
 
 /// Create a copy of SignInState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = freezed,Object? message = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = freezed,Object? message = freezed,Object? email = null,Object? password = null,}) {
   return _then(_SignInState(
 status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as ApiRequestStates?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as EmailFormz,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as PasswordFormz,
   ));
 }
 

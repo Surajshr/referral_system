@@ -3,6 +3,7 @@ import 'package:referral_app/app/cubit/theme_cubit.dart';
 import 'package:referral_app/app/view/app_imports.dart';
 import 'package:referral_app/app/view/app_providers.dart';
 import 'package:referral_app/core/constants/environment_constants.dart';
+import 'package:referral_app/core/route/route_imports.dart';
 import 'package:referral_app/feature/auth/signIn/presentation/view/signin_base_view.dart';
 
 class App extends StatelessWidget {
@@ -28,14 +29,15 @@ class App extends StatelessWidget {
               builder: (context, child) {
                 return BlocBuilder<ThemeCubit, ThemeMode>(
                   builder: (context, themeMode) {
-                    return MaterialApp(
+                    return MaterialApp.router(
+                      routerConfig: router,
                       theme: _buildTheme(Brightness.light),
                       darkTheme: _buildTheme(Brightness.dark),
                       themeMode: themeMode,
                       localizationsDelegates:
                           AppLocalizations.localizationsDelegates,
                       supportedLocales: AppLocalizations.supportedLocales,
-                      home: const SignInBaseView(),
+                      // home: const SignInBaseView(),
                     );
                   },
                 );

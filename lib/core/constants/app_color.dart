@@ -26,9 +26,10 @@ enum AppColorKey {
   inputFill,
   inputBorder,
   inputFocusedBorder,
+  container,
 }
 
-/// Extension for custom app colors with easy maintenance.
+/// Extension for custom app colors .
 @immutable
 class AppColors extends ThemeExtension<AppColors> {
   const AppColors(this._colors);
@@ -38,7 +39,6 @@ class AppColors extends ThemeExtension<AppColors> {
   /// Easy access to colors by key.
   Color operator [](AppColorKey key) => _colors[key]!;
 
-  // Convenient getters for autocomplete support
   Color get primary => this[AppColorKey.primary];
   Color get background => this[AppColorKey.background];
   Color get surface => this[AppColorKey.surface];
@@ -64,8 +64,9 @@ class AppColors extends ThemeExtension<AppColors> {
   Color get inputFill => this[AppColorKey.inputFill];
   Color get inputBorder => this[AppColorKey.inputBorder];
   Color get inputFocusedBorder => this[AppColorKey.inputFocusedBorder];
+  Color get container => this[AppColorKey.container];
 
-  /// Light theme - Clean, professional, modern palette.
+  /// Light theme
   static final light = AppColors({
     AppColorKey.primary: const Color(0xFF10B981),
     AppColorKey.background: const Color(0xFFFAFAFA),
@@ -91,9 +92,10 @@ class AppColors extends ThemeExtension<AppColors> {
     AppColorKey.inputFill: const Color(0xFFFAFAFA),
     AppColorKey.inputBorder: const Color(0xFFD1D5DB),
     AppColorKey.inputFocusedBorder: const Color(0xFF10B981),
+    AppColorKey.container: const Color(0xFF111827),
   });
 
-  /// Dark theme - Easy on eyes, excellent contrast, modern feel.
+  /// Dark theme
   static final dark = AppColors({
     AppColorKey.primary: const Color(0xFF34D399),
     AppColorKey.background: const Color(0xFF0A0A0B),
@@ -119,6 +121,7 @@ class AppColors extends ThemeExtension<AppColors> {
     AppColorKey.inputFill: const Color(0xFF1C1C1E),
     AppColorKey.inputBorder: const Color(0xFF374151),
     AppColorKey.inputFocusedBorder: const Color(0xFF34D399),
+    AppColorKey.container: const Color(0xFFF9FAFB),
   });
 
   @override
@@ -140,127 +143,8 @@ class AppColors extends ThemeExtension<AppColors> {
   }
 }
 
-/// Theme palette configuration for different visual themes (1-5).
-@immutable
-class ThemePalette {
-  const ThemePalette({
-    required this.buttonColor,
-    required this.radioButtonColor,
-    required this.backgroundColor,
-  });
-
-  final Color buttonColor;
-  final Color radioButtonColor;
-  final Color backgroundColor;
-
-  /// Copy with pattern for easy modifications.
-  ThemePalette copyWith({
-    Color? buttonColor,
-    Color? radioButtonColor,
-    Color? backgroundColor,
-  }) {
-    return ThemePalette(
-      buttonColor: buttonColor ?? this.buttonColor,
-      radioButtonColor: radioButtonColor ?? this.radioButtonColor,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-    );
-  }
-}
-
-/// Available theme palettes for both light and dark modes.
-class AppThemePalettes {
-  AppThemePalettes._();
-
-  // Light mode palettes - Carefully curated color harmonies.
-  static const lightPalettes = <int, ThemePalette>{
-    1: ThemePalette(
-      buttonColor: Color(0xFF059669),
-      radioButtonColor: Color(0xFF10B981),
-      backgroundColor: Color(0xFFD1FAE5),
-    ),
-    2: ThemePalette(
-      buttonColor: Color(0xFF0284C7),
-      radioButtonColor: Color(0xFF0EA5E9),
-      backgroundColor: Color(0xFFBAE6FD),
-    ),
-    3: ThemePalette(
-      buttonColor: Color(0xFF7C3AED),
-      radioButtonColor: Color(0xFF8B5CF6),
-      backgroundColor: Color(0xFFDDD6FE),
-    ),
-    4: ThemePalette(
-      buttonColor: Color(0xFFEA580C),
-      radioButtonColor: Color(0xFFF97316),
-      backgroundColor: Color(0xFFFFEDD5),
-    ),
-    5: ThemePalette(
-      buttonColor: Color(0xFFE11D48),
-      radioButtonColor: Color(0xFFF43F5E),
-      backgroundColor: Color(0xFFFFE4E6),
-    ),
-  };
-
-  // Dark mode palettes - Vibrant yet easy on eyes, excellent contrast.
-  static const darkPalettes = <int, ThemePalette>{
-    1: ThemePalette(
-      buttonColor: Color(0xFF10B981),
-      radioButtonColor: Color(0xFF34D399),
-      backgroundColor: Color(0xFF064E3B),
-    ),
-    2: ThemePalette(
-      buttonColor: Color(0xFF0EA5E9),
-      radioButtonColor: Color(0xFF38BDF8),
-      backgroundColor: Color(0xFF075985),
-    ),
-    3: ThemePalette(
-      buttonColor: Color(0xFF8B5CF6),
-      radioButtonColor: Color(0xFFA78BFA),
-      backgroundColor: Color(0xFF5B21B6),
-    ),
-    4: ThemePalette(
-      buttonColor: Color(0xFFF97316),
-      radioButtonColor: Color(0xFFFB923C),
-      backgroundColor: Color(0xFF9A3412),
-    ),
-    5: ThemePalette(
-      buttonColor: Color(0xFFF43F5E),
-      radioButtonColor: Color(0xFFFB7185),
-      backgroundColor: Color(0xFF9F1239),
-    ),
-  };
-
-  /// Gets the theme palette for the given theme ID and brightness.
-  static ThemePalette getPalette(int themeId, Brightness brightness) {
-    final palettes = brightness == Brightness.light
-        ? lightPalettes
-        : darkPalettes;
-    return palettes[themeId] ?? palettes[1]!;
-  }
-
-  /// Gets button color for a theme ID and brightness.
-  static Color getButtonColor(int themeId, Brightness brightness) {
-    return getPalette(themeId, brightness).buttonColor;
-  }
-
-  /// Gets radio button color for a theme ID and brightness.
-  static Color getRadioButtonColor(int themeId, Brightness brightness) {
-    return getPalette(themeId, brightness).radioButtonColor;
-  }
-
-  /// Gets background color for a theme ID and brightness.
-  static Color getBackgroundColor(int themeId, Brightness brightness) {
-    return getPalette(themeId, brightness).backgroundColor;
-  }
-}
-
 /// Extension on BuildContext for easy access to app colors.
 extension AppColorsExtension on BuildContext {
   /// Gets the current theme's app colors.
   AppColors get appColors => Theme.of(this).extension<AppColors>()!;
-
-  /// Gets a theme palette for the given ID based on current brightness.
-  ThemePalette themePalette(int themeId) {
-    final brightness = Theme.of(this).brightness;
-    return AppThemePalettes.getPalette(themeId, brightness);
-  }
 }

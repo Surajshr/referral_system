@@ -16,5 +16,5 @@ class ThemeCubit extends Cubit<ThemeMode> {
     }
   }
 
-  void setTheme(ThemeMode mode) => emit(mode);
+  // void setTheme(ThemeMode mode) => emit(mode);
 }
