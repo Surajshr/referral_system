@@ -25,5 +25,9 @@ final GoRouter router = GoRouter(
       path: RouteName.dashboardBaseScreen,
       builder: (context, state) => const DashboardBaseScreen(),
     ),
+    GoRoute(
+      path: RouteName.transactionBaseScreen,
+      builder: (context, state) => const TransactionBaseView(),
+    ),
   ],
 );
