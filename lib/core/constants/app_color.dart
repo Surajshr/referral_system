@@ -32,9 +32,10 @@ enum AppColorKey {
 /// Extension for custom app colors .
 @immutable
 class AppColors extends ThemeExtension<AppColors> {
-  const AppColors(this._colors);
+  const AppColors(this._colors, {this.cardGradient = const []});
 
   final Map<AppColorKey, Color> _colors;
+  final List<Color> cardGradient;
 
   /// Easy access to colors by key.
   Color operator [](AppColorKey key) => _colors[key]!;
@@ -67,66 +68,78 @@ class AppColors extends ThemeExtension<AppColors> {
   Color get container => this[AppColorKey.container];
 
   /// Light theme
-  static final light = AppColors({
-    AppColorKey.primary: const Color(0xFF10B981),
-    AppColorKey.background: const Color(0xFFFAFAFA),
-    AppColorKey.surface: const Color(0xFFFFFFFF),
-    AppColorKey.surfaceVariant: const Color(0xFFF5F5F5),
-    AppColorKey.text: const Color(0xFF111827),
-    AppColorKey.textSecondary: const Color(0xFF6B7280),
-    AppColorKey.textMuted: const Color(0xFF9CA3AF),
-    AppColorKey.border: const Color(0xFFE5E7EB),
-    AppColorKey.divider: const Color(0xFFF3F4F6),
-    AppColorKey.error: const Color(0xFFEF4444),
-    AppColorKey.success: const Color(0xFF10B981),
-    AppColorKey.warning: const Color(0xFFF59E0B),
-    AppColorKey.buttonBackground: const Color(0xFF059669),
-    AppColorKey.buttonText: const Color(0xFFFFFFFF),
-    AppColorKey.checkBox: const Color(0xFF10B981),
-    AppColorKey.radioButton: const Color(0xFF10B981),
-    AppColorKey.otpSendButton: const Color(0xFF0891B2),
-    AppColorKey.screenLockContainer: const Color(0xFF06B6D4),
-    AppColorKey.glassmorphismBackground: const Color(0x1A000000),
-    AppColorKey.cardBackground: const Color(0xFFFFFFFF),
-    AppColorKey.shadow: const Color(0x0D000000),
-    AppColorKey.inputFill: const Color(0xFFFAFAFA),
-    AppColorKey.inputBorder: const Color(0xFFD1D5DB),
-    AppColorKey.inputFocusedBorder: const Color(0xFF10B981),
-    AppColorKey.container: const Color(0xFF111827),
-  });
+  static final light = AppColors(
+    {
+      AppColorKey.primary: const Color(0xFF10B981),
+      AppColorKey.background: const Color(0xFFFAFAFA),
+      AppColorKey.surface: const Color(0xFFFFFFFF),
+      AppColorKey.surfaceVariant: const Color(0xFFF5F5F5),
+      AppColorKey.text: const Color(0xFF111827),
+      AppColorKey.textSecondary: const Color(0xFF6B7280),
+      AppColorKey.textMuted: const Color(0xFF9CA3AF),
+      AppColorKey.border: const Color(0xFFE5E7EB),
+      AppColorKey.divider: const Color(0xFFF3F4F6),
+      AppColorKey.error: const Color(0xFFEF4444),
+      AppColorKey.success: const Color(0xFF10B981),
+      AppColorKey.warning: const Color(0xFFF59E0B),
+      AppColorKey.buttonBackground: const Color(0xFF059669),
+      AppColorKey.buttonText: const Color(0xFFFFFFFF),
+      AppColorKey.checkBox: const Color(0xFF10B981),
+      AppColorKey.radioButton: const Color(0xFF10B981),
+      AppColorKey.otpSendButton: const Color(0xFF0891B2),
+      AppColorKey.screenLockContainer: const Color(0xFF06B6D4),
+      AppColorKey.glassmorphismBackground: const Color(0x1A000000),
+      AppColorKey.cardBackground: const Color(0xFFFFFFFF),
+      AppColorKey.shadow: const Color(0x0D000000),
+      AppColorKey.inputFill: const Color(0xFFFAFAFA),
+      AppColorKey.inputBorder: const Color(0xFFD1D5DB),
+      AppColorKey.inputFocusedBorder: const Color(0xFF10B981),
+      AppColorKey.container: const Color(0xFF111827),
+    },
+    cardGradient: const [Color(0xFF10B981), Color(0xFF059669)],
+  );
 
   /// Dark theme
-  static final dark = AppColors({
-    AppColorKey.primary: const Color(0xFF34D399),
-    AppColorKey.background: const Color(0xFF0A0A0B),
-    AppColorKey.surface: const Color(0xFF1C1C1E),
-    AppColorKey.surfaceVariant: const Color(0xFF2C2C2E),
-    AppColorKey.text: const Color(0xFFF9FAFB),
-    AppColorKey.textSecondary: const Color(0xFFD1D5DB),
-    AppColorKey.textMuted: const Color(0xFF9CA3AF),
-    AppColorKey.border: const Color(0xFF374151),
-    AppColorKey.divider: const Color(0xFF1F2937),
-    AppColorKey.error: const Color(0xFFF87171),
-    AppColorKey.success: const Color(0xFF34D399),
-    AppColorKey.warning: const Color(0xFFFBBF24),
-    AppColorKey.buttonBackground: const Color(0xFF059669),
-    AppColorKey.buttonText: const Color(0xFFFFFFFF),
-    AppColorKey.checkBox: const Color(0xFF34D399),
-    AppColorKey.radioButton: const Color(0xFF34D399),
-    AppColorKey.otpSendButton: const Color(0xFF06B6D4),
-    AppColorKey.screenLockContainer: const Color(0xFF0891B2),
-    AppColorKey.glassmorphismBackground: const Color(0x4D000000),
-    AppColorKey.cardBackground: const Color(0xFF1C1C1E),
-    AppColorKey.shadow: const Color(0x66000000),
-    AppColorKey.inputFill: const Color(0xFF1C1C1E),
-    AppColorKey.inputBorder: const Color(0xFF374151),
-    AppColorKey.inputFocusedBorder: const Color(0xFF34D399),
-    AppColorKey.container: const Color(0xFFF9FAFB),
-  });
+  static final dark = AppColors(
+    {
+      AppColorKey.primary: const Color(0xFF34D399),
+      AppColorKey.background: const Color(0xFF0A0A0B),
+      AppColorKey.surface: const Color(0xFF1C1C1E),
+      AppColorKey.surfaceVariant: const Color(0xFF2C2C2E),
+      AppColorKey.text: const Color(0xFFF9FAFB),
+      AppColorKey.textSecondary: const Color(0xFFD1D5DB),
+      AppColorKey.textMuted: const Color(0xFF9CA3AF),
+      AppColorKey.border: const Color(0xFF374151),
+      AppColorKey.divider: const Color(0xFF1F2937),
+      AppColorKey.error: const Color(0xFFF87171),
+      AppColorKey.success: const Color(0xFF34D399),
+      AppColorKey.warning: const Color(0xFFFBBF24),
+      AppColorKey.buttonBackground: const Color(0xFF059669),
+      AppColorKey.buttonText: const Color(0xFFFFFFFF),
+      AppColorKey.checkBox: const Color(0xFF34D399),
+      AppColorKey.radioButton: const Color(0xFF34D399),
+      AppColorKey.otpSendButton: const Color(0xFF06B6D4),
+      AppColorKey.screenLockContainer: const Color(0xFF0891B2),
+      AppColorKey.glassmorphismBackground: const Color(0x4D000000),
+      AppColorKey.cardBackground: const Color(0xFF1C1C1E),
+      AppColorKey.shadow: const Color(0x66000000),
+      AppColorKey.inputFill: const Color(0xFF1C1C1E),
+      AppColorKey.inputBorder: const Color(0xFF374151),
+      AppColorKey.inputFocusedBorder: const Color(0xFF34D399),
+      AppColorKey.container: const Color(0xFFF9FAFB),
+    },
+    cardGradient: const [Color(0xFF34D399), Color(0xFF059669)],
+  );
 
   @override
-  AppColors copyWith({Map<AppColorKey, Color>? colors}) {
-    return AppColors({..._colors, ...?colors});
+  AppColors copyWith({
+    Map<AppColorKey, Color>? colors,
+    List<Color>? cardGradient,
+  }) {
+    return AppColors({
+      ..._colors,
+      ...?colors,
+    }, cardGradient: cardGradient ?? this.cardGradient);
   }
 
   @override
@@ -138,6 +151,16 @@ class AppColors extends ThemeExtension<AppColors> {
           (key) =>
               MapEntry(key, Color.lerp(_colors[key], other._colors[key], t)!),
         ),
+      ),
+      cardGradient: List.generate(
+        cardGradient.length,
+        (i) => Color.lerp(
+          cardGradient[i],
+          other.cardGradient.length > i
+              ? other.cardGradient[i]
+              : cardGradient[i],
+          t,
+        )!,
       ),
     );
   }

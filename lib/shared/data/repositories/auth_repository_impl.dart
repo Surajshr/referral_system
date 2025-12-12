@@ -39,6 +39,23 @@ class AuthRepositoryImpl implements AuthRepository {
         return const Left(ValidationException('All fields are required'));
       }
 
+      // Validate referral code if provided
+      String? referrerId;
+      if (referralCode != null && referralCode.isNotEmpty) {
+        final referrerData = await SupabaseService.from(
+          'users',
+        ).select('id').eq('referral_code', referralCode).maybeSingle();
+
+        if (referrerData == null) {
+          return const Left(
+            ValidationException(
+              'Invalid referral code. Please check and try again.',
+            ),
+          );
+        }
+        referrerId = referrerData['id'] as String;
+      }
+
       // Check if user already exists
       final existingUser = await SupabaseService.from(
         'users',
@@ -80,27 +97,14 @@ class AuthRepositoryImpl implements AuthRepository {
       ).insert({'user_id': userId, 'balance': 0.0});
 
       // If referral code provided, create referral entry
-      if (referralCode != null && referralCode.isNotEmpty) {
-        // Find referrer by referral code
-        final referrerData = await SupabaseService.from(
-          'users',
-        ).select('id').eq('referral_code', referralCode).maybeSingle();
-
-        if (referrerData != null) {
-          final referrerId = referrerData['id'] as String;
-
-          // Insert referral as PENDING
-          await SupabaseService.from('referrals').insert({
-            'referrer_id': referrerId,
-            'referee_id': userId,
-            'status': ReferralStatus.pending.value,
-          });
-        } else {
-          developer.log(
-            'Referral code not found: $referralCode',
-            name: 'AuthRepository',
-          );
-        }
+      if (referrerId != null) {
+        // Insert referral as PENDING
+        await SupabaseService.from('referrals').insert({
+          'id': _uuid.v4(),
+          'referrer_id': referrerId,
+          'referee_id': userId,
+          'status': ReferralStatus.pending.value,
+        });
       }
 
       // Create session

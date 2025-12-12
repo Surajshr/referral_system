@@ -3,8 +3,15 @@ import 'package:referral_app/app/cubit/theme_cubit.dart';
 import 'package:referral_app/app/view/app_imports.dart';
 
 class AppTopSectionWidget extends StatelessWidget {
-  const AppTopSectionWidget({super.key, this.showBackButton = true});
+  const AppTopSectionWidget({
+    super.key,
+    this.showBackButton = true,
+    this.prefix,
+    this.title,
+  });
   final bool showBackButton;
+  final Widget? prefix;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +34,14 @@ class AppTopSectionWidget extends StatelessWidget {
                     child: Icon(Icons.arrow_back),
                   ),
                 ),
+              )
+            : prefix ?? SizedBox.shrink(),
+        title != null
+            ? BuildText(
+                text: title!,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w600,
+                color: context.appColors.text,
               )
             : SizedBox.shrink(),
         BlocBuilder<ThemeCubit, ThemeMode>(

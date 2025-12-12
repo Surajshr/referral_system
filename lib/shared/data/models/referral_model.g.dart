@@ -29,7 +29,7 @@ Map<String, dynamic> _$ReferralModelToJson(_ReferralModel instance) =>
     };
 
 const _$ReferralStatusEnumMap = {
-  ReferralStatus.pending: 'PENDING',
-  ReferralStatus.successful: 'SUCCESSFUL',
-  ReferralStatus.failed: 'FAILED',
+  ReferralStatus.pending: 'pending',
+  ReferralStatus.successful: 'successful',
+  ReferralStatus.failed: 'failed',
 };

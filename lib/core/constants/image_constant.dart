@@ -9,4 +9,6 @@ class ImageConstants {
   static const String giftBoxIcon = '${_basePath}gift_box.png';
   static const String loaderLottie = '${_lottiePath}loader.json';
   static const String whiteLoaderLottie = '${_lottiePath}white_loader.json';
+  static const String piggyBankIcon = '${_basePath}piggy_bank.png';
+  static const String transactionIcon = '${_basePath}transaction.png';
 }

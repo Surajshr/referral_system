@@ -5,18 +5,18 @@ part 'referral_model.g.dart';
 
 /// Referral status enum
 enum ReferralStatus {
-  @JsonValue('PENDING')
+  @JsonValue('pending')
   pending,
-  @JsonValue('SUCCESSFUL')
+  @JsonValue('successful')
   successful,
-  @JsonValue('FAILED')
+  @JsonValue('failed')
   failed;
 
   String get value {
     return switch (this) {
-      ReferralStatus.pending => 'PENDING',
-      ReferralStatus.successful => 'SUCCESSFUL',
-      ReferralStatus.failed => 'FAILED',
+      ReferralStatus.pending => 'pending',
+      ReferralStatus.successful => 'successful',
+      ReferralStatus.failed => 'failed',
     };
   }
 }
