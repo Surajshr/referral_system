@@ -41,6 +41,7 @@ class SignUpFormWidget extends StatelessWidget {
       child: Column(
         children: [
           AppTextField(
+            autoFocus: true,
             focusNode: _fullNameFocusNode,
             hintText: 'Enter your full name',
             titleText: 'Full Name',

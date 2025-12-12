@@ -1,20 +1,18 @@
 import 'package:dartz/dartz.dart';
+import 'package:referral_app/core/exceptions/app_exception.dart';
+import 'package:referral_app/feature/auth/signIn/domain/entity/signin_entity.dart';
 import 'package:referral_app/feature/auth/signIn/domain/repository/signin_repository.dart';
+import 'package:referral_app/shared/data/models/user_model.dart';
 
 class SignInUseCase {
   SignInUseCase(this._repository);
   final SignInRepository _repository;
 
-  // Future<Either<SignInModel, Failure>> signIn({
-  //   required String email,
-  //   required String password,
-  //   required bool remember,
-  // }) {
-  //   final signInEntity = SignInEntity(
-  //     email: email.trim(),
-  //     password: password.trim(),
-  //     remember: remember,
-  //   );
-  //   return _repository.login(signInEntity);
-  // }
+  Future<Either<AppException, UserModel>> login({
+    required String email,
+    required String password,
+  }) {
+    final signInEntity = SignInEntity(email: email, password: password);
+    return _repository.login(signInEntity);
+  }
 }

@@ -26,6 +26,7 @@ class SignInFormWidget extends StatelessWidget {
       child: Column(
         children: [
           AppTextField(
+            autoFocus: true,
             focusNode: _emailFocusNode,
             hintText: ' Email',
             titleText: 'Email Address',

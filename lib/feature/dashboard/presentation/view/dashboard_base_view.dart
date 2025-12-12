@@ -15,6 +15,6 @@ class _DashboardBaseScreenState extends State<DashboardBaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Text('Dashboard'));
+    return Scaffold(body: Center(child: Text('Dashboard')));
   }
 }

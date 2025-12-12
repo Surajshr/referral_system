@@ -363,12 +363,14 @@ class AuthRepositoryImpl implements AuthRepository {
 
   /// Create a new session for user
   Future<SessionModel> _createSession(String userId) async {
+    final sessionId = _uuid.v4();
     final token = _uuid.v4();
     final refreshToken = _uuid.v4();
     final expiresAt = DateTime.now().add(const Duration(days: 30));
 
     final sessionData = await SupabaseService.from('sessions')
         .insert({
+          'id': sessionId,
           'user_id': userId,
           'token': token,
           'refresh_token': refreshToken,

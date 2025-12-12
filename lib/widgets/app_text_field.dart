@@ -31,6 +31,7 @@ class AppTextField extends StatelessWidget {
     this.showCounter = false,
     this.shouldShowErrorText = true,
     this.titleText,
+    this.autoFocus = false,
   });
 
   final TextEditingController? controller;
@@ -62,7 +63,7 @@ class AppTextField extends StatelessWidget {
   final bool showCounter;
   final bool shouldShowErrorText;
   final String? titleText;
-
+  final bool autoFocus;
   @override
   Widget build(BuildContext context) {
     final effectiveMaxLines = maxLines ?? minLines;
@@ -88,6 +89,7 @@ class AppTextField extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      autofocus: autoFocus ?? false,
                       textCapitalization:
                           textCapitalization ?? TextCapitalization.none,
                       maxLength: maxLength,
