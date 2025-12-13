@@ -29,13 +29,18 @@ class _DashboardBaseScreenState extends State<DashboardBaseScreen> {
                 60.verticalSpace,
                 AppTopSectionWidget(
                   showBackButton: false,
-                  prefix: Container(
-                    padding: EdgeInsets.all(12.r),
-                    decoration: BoxDecoration(
-                      color: context.appColors.surfaceVariant,
-                      borderRadius: BorderRadius.circular(360.r),
+                  prefix: GestureDetector(
+                    onTap: () {
+                      context.push(RouteName.profileBaseScreen);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(12.r),
+                      decoration: BoxDecoration(
+                        color: context.appColors.surfaceVariant,
+                        borderRadius: BorderRadius.circular(360.r),
+                      ),
+                      child: const Icon(Icons.person),
                     ),
-                    child: const Icon(Icons.person),
                   ),
                   title: 'Refer & Earn',
                 ),

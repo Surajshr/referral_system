@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
+import 'package:http/http.dart' show ClientException;
 import 'package:referral_app/core/exceptions/app_exception.dart';
 import 'package:referral_app/core/services/storage/secure_storage_service.dart';
 import 'package:referral_app/core/services/supabase/supabase_service.dart';
@@ -39,21 +40,43 @@ class AuthRepositoryImpl implements AuthRepository {
         return const Left(ValidationException('All fields are required'));
       }
 
+      // Check if Supabase is initialized
+      if (!SupabaseService.isInitialized) {
+        return const Left(
+          NetworkException(
+            'Unable to connect to the server. Please check your internet connection',
+          ),
+        );
+      }
+
       // Validate referral code if provided
       String? referrerId;
       if (referralCode != null && referralCode.isNotEmpty) {
-        final referrerData = await SupabaseService.from(
-          'users',
-        ).select('id').eq('referral_code', referralCode).maybeSingle();
+        try {
+          final referrerData = await SupabaseService.from(
+            'users',
+          ).select('id').eq('referral_code', referralCode).maybeSingle();
 
-        if (referrerData == null) {
+          if (referrerData == null) {
+            return const Left(
+              ValidationException(
+                'Invalid referral code. Please check and try again.',
+              ),
+            );
+          }
+          referrerId = referrerData['id'] as String;
+        } on ClientException catch (e) {
+          developer.log(
+            'Network error validating referral code',
+            name: 'AuthRepository',
+            error: e,
+          );
           return const Left(
-            ValidationException(
-              'Invalid referral code. Please check and try again.',
+            NetworkException(
+              'Unable to verify referral code. Please check your internet connection',
             ),
           );
         }
-        referrerId = referrerData['id'] as String;
       }
 
       // Check if user already exists
@@ -143,6 +166,15 @@ class AuthRepositoryImpl implements AuthRepository {
         );
       }
 
+      // Check if Supabase is initialized
+      if (!SupabaseService.isInitialized) {
+        return const Left(
+          NetworkException(
+            'Unable to connect to the server. Please check your internet connection',
+          ),
+        );
+      }
+
       // Hash password
       final hashedPassword = _hashPassword(password);
 
@@ -189,6 +221,19 @@ class AuthRepositoryImpl implements AuthRepository {
       final sessionToken = await _secureStorage.getSessionToken();
       if (sessionToken == null) {
         return const Left(UnauthorizedException('No session found'));
+      }
+
+      // Check if Supabase is initialized
+      if (!SupabaseService.isInitialized) {
+        developer.log(
+          'Supabase not initialized during session check',
+          name: 'AuthRepository',
+        );
+        // Return UnauthorizedException instead of NetworkException
+        // to prevent infinite retry loops in splash screen
+        return const Left(
+          UnauthorizedException('Unable to verify session. Please login again'),
+        );
       }
 
       // Validate session in database

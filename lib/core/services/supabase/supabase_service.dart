@@ -25,12 +25,12 @@ class SupabaseService {
     return _client!;
   }
 
-  // /// Direct access to auth
-  // static GoTrueClient get auth => client.auth;
+  /// Direct access to auth
+  static GoTrueClient get auth => client.auth;
 
-  // /// Direct access to database
+  /// Direct access to database
   static SupabaseQueryBuilder from(String table) => client.from(table);
 
-  // /// Check if Supabase is initialized
-  // static bool get isInitialized => _client != null;
+  /// Check if Supabase is initialized
+  static bool get isInitialized => _client != null;
 }

@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'dart:developer' as developer;
 
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/services.dart';
 import 'package:referral_app/core/constants/environment_constants.dart';
 import 'package:referral_app/core/di/di.dart';
@@ -14,11 +14,20 @@ Future<void> initializeApp() async {
 }
 
 Future<void> _initializeServices() async {
-  // Initialize Supabase first
-  await SupabaseService.initialize(
-    url: EnvironmentConstants.supabaseUrl,
-    anonKey: EnvironmentConstants.supabaseAnonKey,
-  );
+  try {
+    // Initialize Supabase first with error handling
+    await SupabaseService.initialize(
+      url: EnvironmentConstants.supabaseUrl,
+      anonKey: EnvironmentConstants.supabaseAnonKey,
+    );
+  } catch (e, stackTrace) {
+    developer.log(
+      'Failed to initialize Supabase: $e',
+      name: 'StartUp',
+      error: e,
+      stackTrace: stackTrace,
+    );
+  }
 
   await Future.wait([
     initDependencies(),

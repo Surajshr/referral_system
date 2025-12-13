@@ -4,7 +4,6 @@ import 'package:referral_app/app/view/app_imports.dart';
 import 'package:referral_app/app/view/app_providers.dart';
 import 'package:referral_app/core/constants/environment_constants.dart';
 import 'package:referral_app/core/route/route_imports.dart';
-import 'package:referral_app/feature/auth/signIn/presentation/view/signin_base_view.dart';
 
 class App extends StatelessWidget {
   const App({super.key, required this.environment});
@@ -17,7 +16,6 @@ class App extends StatelessWidget {
         textDirection: TextDirection.ltr,
         child: Stack(
           alignment: Alignment.topRight,
-
           children: [
             ScreenUtilInit(
               designSize: const Size(
@@ -34,10 +32,10 @@ class App extends StatelessWidget {
                       theme: _buildTheme(Brightness.light),
                       darkTheme: _buildTheme(Brightness.dark),
                       themeMode: themeMode,
+                      debugShowCheckedModeBanner: false,
                       localizationsDelegates:
                           AppLocalizations.localizationsDelegates,
                       supportedLocales: AppLocalizations.supportedLocales,
-                      // home: const SignInBaseView(),
                     );
                   },
                 );

@@ -5,47 +5,50 @@ class HowItWorksSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        BuildText(
-          text: 'How Referral Works',
-          fontSize: 20.sp,
-          fontWeight: FontWeight.w700,
-          color: context.appColors.text,
-        ),
-        4.verticalSpace,
-        BuildText(
-          text: 'Earn rewards in 3 simple steps',
-          fontSize: 14.sp,
-          fontWeight: FontWeight.w500,
-          color: context.appColors.textSecondary,
-        ),
-        20.verticalSpace,
-        _HowItWorksStep(
-          stepNumber: 1,
-          icon: Icons.share_rounded,
-          title: 'Share your unique code',
-          description:
-              'Send your code to friends via message, email, or social media',
-          isLast: false,
-        ),
-        _HowItWorksStep(
-          stepNumber: 2,
-          icon: Icons.person_add_rounded,
-          title: 'Friend signs up',
-          description: 'They enter your code during their registration process',
-          isLast: false,
-        ),
-        _HowItWorksStep(
-          stepNumber: 3,
-          icon: Icons.payment_rounded,
-          title: 'You both earn \$20',
-          description:
-              'Rewards are instantly credited to your wallet balance right after they do their first transaction',
-          isLast: true,
-        ),
-      ],
+    return RepaintBoundary(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BuildText(
+            text: 'How Referral Works',
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w700,
+            color: context.appColors.text,
+          ),
+          4.verticalSpace,
+          BuildText(
+            text: 'Earn rewards in 3 simple steps',
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+            color: context.appColors.textSecondary,
+          ),
+          20.verticalSpace,
+          const _HowItWorksStep(
+            stepNumber: 1,
+            icon: Icons.share_rounded,
+            title: 'Share your unique code',
+            description:
+                'Send your code to friends via message, email, or social media',
+            isLast: false,
+          ),
+          const _HowItWorksStep(
+            stepNumber: 2,
+            icon: Icons.person_add_rounded,
+            title: 'Friend signs up',
+            description:
+                'They enter your code during their registration process',
+            isLast: false,
+          ),
+          const _HowItWorksStep(
+            stepNumber: 3,
+            icon: Icons.payment_rounded,
+            title: 'You both earn \$20',
+            description:
+                'Rewards are instantly credited to your wallet balance right after they do their first transaction',
+            isLast: true,
+          ),
+        ],
+      ),
     );
   }
 }

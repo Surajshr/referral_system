@@ -29,7 +29,7 @@ class RecentActivitySection extends StatelessWidget {
           ],
         ),
         12.verticalSpace,
-        _ActivityCard(
+        const _ActivityCard(
           icon: ImageConstants.trophyIcon,
           title: 'Referral Bonus',
           subtitle: 'From John Doe',
@@ -38,7 +38,7 @@ class RecentActivitySection extends StatelessWidget {
           isPositive: true,
         ),
         12.verticalSpace,
-        _ActivityCard(
+        const _ActivityCard(
           icon: ImageConstants.transactionIcon,
           title: 'First Transaction',
           subtitle: 'Completed',
@@ -47,7 +47,7 @@ class RecentActivitySection extends StatelessWidget {
           isPositive: true,
         ),
         12.verticalSpace,
-        _ActivityCard(
+        const _ActivityCard(
           icon: ImageConstants.piggyBankIcon,
           title: 'Referral Pending',
           subtitle: 'Jane Smith',
@@ -110,6 +110,8 @@ class _ActivityCard extends StatelessWidget {
               color: isPositive
                   ? context.appColors.success
                   : context.appColors.warning,
+              cacheWidth: (48.w * 3).toInt(),
+              cacheHeight: (48.h * 3).toInt(),
             ),
           ),
           12.horizontalSpace,

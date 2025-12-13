@@ -32,6 +32,7 @@ dependencies:
   supabase_flutter: ^2.10.3
   crypto: ^3.0.3
   share_plus: ^10.1.4
+  shimmer: ^3.0.0
 
 dev_dependencies:
   bloc_test: ^10.0.0
