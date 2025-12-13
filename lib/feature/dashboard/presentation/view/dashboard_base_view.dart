@@ -40,58 +40,65 @@ class _DashboardBaseScreenState extends State<DashboardBaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.push(RouteName.transactionBaseScreen);
-        },
-        backgroundColor: context.appColors.primary,
-        child: Padding(
-          padding: EdgeInsets.all(12.r),
-          child: Image.asset(ImageConstants.sendMoneyIcon, color: Colors.white),
+    return PopScope(
+      canPop: false,
+
+      child: CustomScaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            context.push(RouteName.transactionBaseScreen);
+          },
+          backgroundColor: context.appColors.primary,
+          child: Padding(
+            padding: EdgeInsets.all(12.r),
+            child: Image.asset(
+              ImageConstants.sendMoneyIcon,
+              color: Colors.white,
+            ),
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              children: [
-                60.verticalSpace,
-                AppTopSectionWidget(
-                  showBackButton: false,
-                  prefix: GestureDetector(
-                    onTap: () {
-                      context.push(RouteName.profileBaseScreen);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(12.r),
-                      decoration: BoxDecoration(
-                        color: context.appColors.surfaceVariant,
-                        borderRadius: BorderRadius.circular(360.r),
+        body: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                children: [
+                  60.verticalSpace,
+                  AppTopSectionWidget(
+                    showBackButton: false,
+                    prefix: GestureDetector(
+                      onTap: () {
+                        context.push(RouteName.profileBaseScreen);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(12.r),
+                        decoration: BoxDecoration(
+                          color: context.appColors.surfaceVariant,
+                          borderRadius: BorderRadius.circular(360.r),
+                        ),
+                        child: const Icon(Icons.person),
                       ),
-                      child: const Icon(Icons.person),
                     ),
+                    title: 'Refer & Earn',
                   ),
-                  title: 'Refer & Earn',
-                ),
-                16.verticalSpace,
-              ],
+                  16.verticalSpace,
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: BlocBuilder<DashboardBloc, DashboardBlocState>(
-              builder: (context, state) {
-                return switch (state) {
-                  DashboardInitial() ||
-                  DashboardLoading() => _buildLoadingState(),
-                  DashboardSuccess() => _buildSuccessState(context, state),
-                  DashboardFailure() => _buildErrorState(context, state),
-                };
-              },
+            Expanded(
+              child: BlocBuilder<DashboardBloc, DashboardBlocState>(
+                builder: (context, state) {
+                  return switch (state) {
+                    DashboardInitial() ||
+                    DashboardLoading() => _buildLoadingState(),
+                    DashboardSuccess() => _buildSuccessState(context, state),
+                    DashboardFailure() => _buildErrorState(context, state),
+                  };
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

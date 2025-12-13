@@ -9,6 +9,7 @@ A referral app that lets users easily invite friends, track referrals, and earn 
 - [Architecture Approach](#architecture-approach)
 - [Backend & Sample Code](#backend--sample-code)
 - [Referral System Business Logic](#referral-system-business-logic)
+- [Assumptions](#assumptions)
 - [Running the App](#running-the-app)
 - [Testing Instructions](#testing-instructions)
 - [App Screenshots](#app-screenshots)
@@ -103,6 +104,24 @@ The sample code demonstrates how to integrate REST API endpoints if needed in th
    - Each user has a wallet with balance tracking
    - Wallet balance updates with each transaction
    - Transaction history shows all sent/received transactions
+
+---
+
+## Assumptions
+
+### Technical Assumptions
+
+- **Supabase**: Project is configured with proper credentials, database schema (users, wallets, transactions, referrals), and RLS policies
+- **Internet Connectivity**: Required for core app functionality
+- **Code Generation**: `build_runner` must be run after modifying data models
+- **Platform Support**: Works on iOS, Android, Web, and Windows (platform-specific setup may be required)
+
+### Business Logic Assumptions
+
+- **Opening Balance**: New users receive 100 as initial wallet balance
+- **Referral Reward**: Triggered automatically when a referred user completes their first transaction
+- **Transaction Validation**: Handled server-side via Supabase
+- **Session Management**:  authentication tokens and session persistence using secure storage and supabase 
 
 ---
 
