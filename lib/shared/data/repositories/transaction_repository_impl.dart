@@ -1,6 +1,7 @@
 import 'dart:developer' as developer;
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:referral_app/core/exceptions/app_exception.dart';
 import 'package:referral_app/core/services/supabase/supabase_service.dart';
 import 'package:referral_app/core/utils/exception_handler.dart';
@@ -240,11 +241,16 @@ class TransactionRepositoryImpl implements TransactionRepository {
     final creditResult = await _walletRepository.creditWallet(
       userId: receiverId,
       amount: amount,
+      transactionType: TransactionType.transaction,
     );
 
     if (creditResult.isLeft()) {
       // Rollback: credit back to sender
-      await _walletRepository.creditWallet(userId: senderId, amount: amount);
+      await _walletRepository.creditWallet(
+        userId: senderId,
+        amount: amount,
+        transactionType: TransactionType.refund,
+      );
 
       return creditResult.fold(
         (error) => Left(error),
@@ -291,7 +297,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
         stackTrace: s,
         level: 1000,
       );
-      return Left(ExceptionHandler.handle(e));
+      return Left(ExceptionHandler.handle(kDebugMode ? e : Exception()));
     }
   }
 

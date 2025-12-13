@@ -23,7 +23,8 @@ class SignInBottomCardWidget extends StatelessWidget {
           18.verticalSpace,
           ReferralInforCardWidget(
             title: 'Earn Rewards',
-            description: 'Get \$10 for every friend you refer',
+            description:
+                'Get \$${AppConstants.referralRewardAmount}for every friend you refer',
             image: ImageConstants.dollarIcon,
           ),
           16.verticalSpace,

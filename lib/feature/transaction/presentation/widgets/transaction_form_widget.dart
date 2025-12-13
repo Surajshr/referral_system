@@ -174,59 +174,7 @@ class TransactinFormWidget extends StatelessWidget with AuthMixin {
                   32.verticalSpace,
 
                   // Send Button
-                  Container(
-                    width: double.infinity,
-                    height: 56.h,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          context.appColors.primary,
-                          context.appColors.primary.withValues(alpha: 0.8),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(16.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: context.appColors.primary.withValues(
-                            alpha: 0.4,
-                          ),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                    ),
-                    child: ElevatedButton(
-                      onPressed: isLoading
-                          ? null
-                          : () => _handleSendTransaction(context, cubitState),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                      ),
-                      child: isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                BuildText(
-                                  text: 'Send & Claim Reward',
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ),
-                                12.horizontalSpace,
-                                Icon(
-                                  Icons.arrow_forward_rounded,
-                                  color: Colors.white,
-                                  size: 20.sp,
-                                ),
-                              ],
-                            ),
-                    ),
-                  ),
+                  _transactionSendButton(isLoading, cubitState),
 
                   16.verticalSpace,
 
@@ -256,6 +204,75 @@ class TransactinFormWidget extends StatelessWidget with AuthMixin {
           );
         },
       ),
+    );
+  }
+
+  Builder _transactionSendButton(bool isLoading, TransactionState cubitState) {
+    return Builder(
+      builder: (context) {
+        final isDisabled = isLoading || !cubitState.canSubmit;
+        return Container(
+          width: 1.sw,
+          height: 56.h,
+          decoration: BoxDecoration(
+            gradient: isDisabled
+                ? null
+                : LinearGradient(
+                    colors: [
+                      context.appColors.primary,
+                      context.appColors.primary.withValues(alpha: 0.8),
+                    ],
+                  ),
+            color: isDisabled ? context.appColors.surfaceVariant : null,
+            borderRadius: BorderRadius.circular(16.r),
+            boxShadow: isDisabled
+                ? null
+                : [
+                    BoxShadow(
+                      color: context.appColors.primary.withValues(alpha: 0.4),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+          ),
+          child: ElevatedButton(
+            onPressed: isDisabled
+                ? null
+                : () => _handleSendTransaction(context, cubitState),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              disabledBackgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+            ),
+            child: isLoading
+                ? CircularProgressIndicator(color: context.appColors.text)
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BuildText(
+                        text: 'Send & Claim Reward',
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w700,
+                        color: isDisabled
+                            ? context.appColors.textMuted
+                            : Colors.white,
+                      ),
+                      12.horizontalSpace,
+                      Icon(
+                        Icons.arrow_forward_rounded,
+                        color: isDisabled
+                            ? context.appColors.textMuted
+                            : Colors.white,
+                        size: 20.sp,
+                      ),
+                    ],
+                  ),
+          ),
+        );
+      },
     );
   }
 

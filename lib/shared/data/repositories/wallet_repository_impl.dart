@@ -1,6 +1,7 @@
 import 'dart:developer' as developer;
 
 import 'package:dartz/dartz.dart';
+import 'package:referral_app/core/constants/app_constants.dart';
 import 'package:referral_app/core/exceptions/app_exception.dart';
 import 'package:referral_app/core/services/supabase/supabase_service.dart';
 import 'package:referral_app/core/utils/exception_handler.dart';
@@ -15,17 +16,47 @@ class WalletRepositoryImpl implements WalletRepository {
   @override
   Future<Either<AppException, WalletModel>> getWallet(String userId) async {
     try {
-      print('userId when getting wallet: $userId');
-      final data = await SupabaseService.from(
-        'wallet',
-      ).select().eq('user_id', userId).maybeSingle();
-      print('data when getting wallet: $data');
+      developer.log(
+        'Getting wallet for userId: $userId',
+        name: 'WalletRepository',
+      );
+
+      // Query wallet - try with explicit column selection first
+      final data = await SupabaseService.from('wallet')
+          .select('user_id, balance, created_at, updated_at')
+          .eq('user_id', userId)
+          .maybeSingle();
+
+      developer.log('Wallet query result: $data', name: 'WalletRepository');
+
       if (data == null) {
         // Wallet doesn't exist, create one
         developer.log(
           'Wallet not found for user, creating new wallet',
           name: 'WalletRepository',
         );
+        return await createWallet(userId);
+      }
+
+      // Validate that user_id exists in the response
+      if (data['user_id'] == null) {
+        developer.log(
+          'Wallet data missing user_id field. Data keys: ${data.keys}, Full data: $data',
+          name: 'WalletRepository',
+          level: 1000,
+        );
+        // Try to delete by any means possible and recreate
+        try {
+          // Try deleting by user_id first
+          await SupabaseService.from('wallet').delete().eq('user_id', userId);
+        } catch (e) {
+          // If that fails, the wallet might be corrupted - log and continue
+          developer.log(
+            'Could not delete corrupted wallet: $e',
+            name: 'WalletRepository',
+            level: 1000,
+          );
+        }
         return await createWallet(userId);
       }
 
@@ -86,7 +117,7 @@ class WalletRepositoryImpl implements WalletRepository {
         final data = await SupabaseService.from('wallet')
             .update({'balance': newBalance})
             .eq('user_id', userId)
-            .select()
+            .select('user_id, balance, created_at, updated_at')
             .single();
 
         final updatedWallet = WalletModel.fromJson(data);
@@ -143,7 +174,7 @@ class WalletRepositoryImpl implements WalletRepository {
         final data = await SupabaseService.from('wallet')
             .update({'balance': newBalance})
             .eq('user_id', userId)
-            .select()
+            .select('user_id, balance, created_at, updated_at')
             .single();
 
         final updatedWallet = WalletModel.fromJson(data);
@@ -176,9 +207,10 @@ class WalletRepositoryImpl implements WalletRepository {
   @override
   Future<Either<AppException, WalletModel>> createWallet(String userId) async {
     try {
-      final data = await SupabaseService.from(
-        'wallet',
-      ).insert({'user_id': userId, 'balance': 0.0}).select().single();
+      final data = await SupabaseService.from('wallet')
+          .insert({'user_id': userId, 'balance': AppConstants.openingBalance})
+          .select('user_id, balance, created_at, updated_at')
+          .single();
 
       final wallet = WalletModel.fromJson(data);
       return Right(wallet);

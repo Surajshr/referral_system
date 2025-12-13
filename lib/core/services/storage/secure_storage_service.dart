@@ -14,29 +14,26 @@ class SecureStorageService {
     String? refreshToken,
   }) async {
     await Future.wait([
-      _storage.write(key: StorageConstant.keyUserId, value: userId),
-      _storage.write(key: StorageConstant.keySessionToken, value: sessionToken),
+      _storage.write(key: StorageConstant.kyUserId, value: userId),
+      _storage.write(key: StorageConstant.kSessionToken, value: sessionToken),
       if (refreshToken != null)
-        _storage.write(
-          key: StorageConstant.keyRefreshToken,
-          value: refreshToken,
-        ),
+        _storage.write(key: StorageConstant.kRefreshToken, value: refreshToken),
     ]);
   }
 
   /// Get user ID
   Future<String?> getUserId() async {
-    return _storage.read(key: StorageConstant.keyUserId);
+    return _storage.read(key: StorageConstant.kyUserId);
   }
 
   /// Get session token
   Future<String?> getSessionToken() async {
-    return _storage.read(key: StorageConstant.keySessionToken);
+    return _storage.read(key: StorageConstant.kSessionToken);
   }
 
   /// Get refresh token
   Future<String?> getRefreshToken() async {
-    return _storage.read(key: StorageConstant.keyRefreshToken);
+    return _storage.read(key: StorageConstant.kRefreshToken);
   }
 
   /// Check if user has valid session
@@ -49,9 +46,9 @@ class SecureStorageService {
   /// Clear all session data
   Future<void> clearSession() async {
     await Future.wait([
-      _storage.delete(key: StorageConstant.keyUserId),
-      _storage.delete(key: StorageConstant.keySessionToken),
-      _storage.delete(key: StorageConstant.keyRefreshToken),
+      _storage.delete(key: StorageConstant.kyUserId),
+      _storage.delete(key: StorageConstant.kSessionToken),
+      _storage.delete(key: StorageConstant.kRefreshToken),
     ]);
   }
 

@@ -12,7 +12,9 @@ enum TransactionType {
   @JsonValue('WITHDRAWAL')
   withdrawal,
   @JsonValue('REFUND')
-  refund;
+  refund,
+  @JsonValue('TRANSACTION')
+  transaction;
 
   String get value {
     return switch (this) {
@@ -20,6 +22,7 @@ enum TransactionType {
       TransactionType.firstTransactionReward => 'FIRST_TRANSACTION_REWARD',
       TransactionType.withdrawal => 'WITHDRAWAL',
       TransactionType.refund => 'REFUND',
+      TransactionType.transaction => 'TRANSACTION',
     };
   }
 }

@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' show ClientException;
+import 'package:referral_app/core/constants/app_constants.dart';
 import 'package:referral_app/core/exceptions/app_exception.dart';
 import 'package:referral_app/core/services/storage/secure_storage_service.dart';
 import 'package:referral_app/core/services/supabase/supabase_service.dart';
@@ -99,7 +100,22 @@ class AuthRepositoryImpl implements AuthRepository {
       // Create user ID
       final userId = _uuid.v4();
 
-      // Insert user
+      // If referral code provided, create referral entry FIRST
+      // in users table, referred by is required and without the referral id,
+      // the user will not be able to sign up
+      String? referralId;
+      referralId = _uuid.v4();
+      if (referrerId != null && referralCode != null) {
+        // Insert referral as PENDING
+        await SupabaseService.from('referrals').insert({
+          'id': referralId,
+          'referrer_id': referrerId,
+          'referee_id': null,
+          'status': ReferralStatus.pending.value,
+        });
+      }
+
+      // Insert user (now referral exists if needed)
       final userData = await SupabaseService.from('users')
           .insert({
             'id': userId,
@@ -108,28 +124,25 @@ class AuthRepositoryImpl implements AuthRepository {
             'phone': phone,
             'password': hashedPassword,
             'referral_code': newReferralCode,
-            'referred_by': referrerId,
+            'referred_by': referralCode != null ? referralId : null,
           })
           .select()
           .single();
 
       final user = UserModel.fromJson(userData);
 
-      // Create wallet for user
-      await SupabaseService.from(
-        'wallet',
-      ).insert({'user_id': userId, 'balance': 0.0}).select().single();
-
-      // If referral code provided, create referral entry
-      if (referrerId != null) {
-        // Insert referral as PENDING
-        await SupabaseService.from('referrals').insert({
-          'id': _uuid.v4(),
-          'referrer_id': referrerId,
-          'referee_id': userId,
-          'status': ReferralStatus.pending.value,
-        });
+      // Update referral with referee_id now that user exists
+      if (referrerId != null && referralCode != null) {
+        await SupabaseService.from(
+          'referrals',
+        ).update({'referee_id': userId}).eq('id', referralId);
       }
+
+      // Create wallet for user
+      await SupabaseService.from('wallet')
+          .insert({'user_id': userId, 'balance': AppConstants.openingBalance})
+          .select('user_id, balance, created_at, updated_at')
+          .single();
 
       // Create session
       final session = await _createSession(userId);

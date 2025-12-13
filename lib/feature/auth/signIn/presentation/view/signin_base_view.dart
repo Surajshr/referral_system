@@ -122,7 +122,9 @@ class _SignInBaseViewState extends State<SignInBaseView> {
                               builder: (context, blocState) {
                                 return AppButton(
                                   text: 'Sign In',
-                                  onPressed: () => _handleSignIn(context),
+                                  onPressed: state.canSubmit
+                                      ? () => _handleSignIn(context)
+                                      : null,
                                 );
                               },
                             ),

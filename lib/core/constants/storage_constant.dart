@@ -3,7 +3,7 @@ class StorageConstant {
   StorageConstant._();
 
   // Storage keys
-  static const String keyUserId = 'user_id';
-  static const String keySessionToken = 'session_token';
-  static const String keyRefreshToken = 'refresh_token';
+  static const String kyUserId = 'user_id';
+  static const String kSessionToken = 'session_token';
+  static const String kRefreshToken = 'refresh_token';
 }

@@ -2,12 +2,16 @@ part of 'signup_cubit.dart';
 
 enum ApiRequestStates { initial, loading, success, error }
 
-// extension Validator on SignInState {
-//   bool get status => Formz.validate([email, password]);
+extension Validator on SignUpState {
+  bool get status => Formz.validate([fullName, email, password, phone]);
 
-//   bool get canSubmit =>
-//       email.isPure == false && password.isPure == false && status;
-// }
+  bool get canSubmit =>
+      fullName.isPure == false &&
+      email.isPure == false &&
+      password.isPure == false &&
+      phone.isPure == false &&
+      status;
+}
 
 @freezed
 abstract class SignUpState with _$SignUpState {

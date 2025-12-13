@@ -1,5 +1,10 @@
 part of 'transaction_cubit.dart';
 
+extension Validator on TransactionState {
+  bool get status => Formz.validate([email]);
+  bool get canSubmit => email.isPure == false && amount.isNotEmpty && status;
+}
+
 @freezed
 abstract class TransactionState with _$TransactionState {
   const factory TransactionState({

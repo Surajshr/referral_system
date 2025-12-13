@@ -6,4 +6,5 @@ class AppConstants {
 
   static const referralRewardAmount = 20.0;
   static const refereeRewardAmount = 20.0;
+  static const openingBalance = 100;
 }

@@ -33,4 +33,5 @@ const _$TransactionTypeEnumMap = {
   TransactionType.firstTransactionReward: 'FIRST_TRANSACTION_REWARD',
   TransactionType.withdrawal: 'WITHDRAWAL',
   TransactionType.refund: 'REFUND',
+  TransactionType.transaction: 'TRANSACTION',
 };

@@ -1,5 +1,8 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:referral_app/core/internet_check/internet_connectivity_checker.dart';
+import 'package:referral_app/core/network/client/base_client.dart';
+import 'package:referral_app/core/network/client/base_client_impl.dart';
 import 'package:referral_app/core/services/storage/secure_storage_service.dart';
 import 'package:referral_app/feature/auth/signIn/data/repository_impl/signin_repository_impl.dart';
 import 'package:referral_app/feature/auth/signIn/domain/repository/signin_repository.dart';
@@ -39,6 +42,9 @@ Future<void> _initCriticalDependencies() async {
         aOptions: AndroidOptions(encryptedSharedPreferences: true),
       ),
     ),
+  );
+  di.registerLazySingleton<BaseClient>(
+    () => BaseClientImpl(di<InternetConnectivityChecker>()),
   );
 }
 

@@ -47,6 +47,7 @@ class _SignUpBaseViewState extends State<SignUpBaseView> {
   }
 
   void _handleSignUp(BuildContext context) {
+    FocusScope.of(context).unfocus();
     final referralCode = referralCodeController.text.trim();
     context.read<SignUpBloc>().add(
       SignUpRegisterRequested(
@@ -145,9 +146,15 @@ class _SignUpBaseViewState extends State<SignUpBaseView> {
                               current is SignUpLoading ||
                               current is SignUpInitial,
                           builder: (context, blocState) {
-                            return AppButton(
-                              text: 'Create Account',
-                              onPressed: () => _handleSignUp(context),
+                            return BlocBuilder<SignUpCubit, SignUpState>(
+                              builder: (context, state) {
+                                return AppButton(
+                                  text: 'Create Account',
+                                  onPressed: state.canSubmit
+                                      ? () => _handleSignUp(context)
+                                      : null,
+                                );
+                              },
                             );
                           },
                         ),
@@ -223,7 +230,7 @@ class _SignUpBaseViewState extends State<SignUpBaseView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BuildText(
-                    text: 'Get \$10 Bonus',
+                    text: 'Get \$${AppConstants.referralRewardAmount} Bonus',
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w700,
                   ),

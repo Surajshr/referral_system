@@ -12,4 +12,5 @@ class ImageConstants {
   static const String piggyBankIcon = '${_basePath}piggy_bank.png';
   static const String transactionIcon = '${_basePath}transaction.png';
   static const String sendMoneyIcon = '${_basePath}send_money.png';
+  static const String emptyWalletIcon = '${_basePath}empty_wallet.png';
 }

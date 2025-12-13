@@ -65,6 +65,12 @@ class ActivityCard extends StatelessWidget {
         'Money refunded',
         true,
       ),
+      TransactionType.transaction => (
+        ImageConstants.transactionIcon,
+        'Transaction',
+        'Money transferred',
+        true,
+      ),
     };
   }
 

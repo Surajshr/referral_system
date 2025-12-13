@@ -52,6 +52,7 @@ class RecentActivitySection extends StatelessWidget {
               child: ActivityCard.fromTransaction(transaction: entry.value),
             ),
           ),
+        60.verticalSpace,
       ],
     );
   }
@@ -65,11 +66,32 @@ class RecentActivitySection extends StatelessWidget {
         border: Border.all(color: context.appColors.border, width: 1),
       ),
       child: Center(
-        child: BuildText(
-          text: 'No recent activity',
-          fontSize: 14.sp,
-          fontWeight: FontWeight.w500,
-          color: context.appColors.textSecondary,
+        child: Column(
+          children: [
+            Image.asset(
+              ImageConstants.emptyWalletIcon,
+              width: 64.w,
+              height: 64.h,
+              color: context.appColors.textMuted,
+            ),
+            16.verticalSpace,
+            BuildText(
+              text: 'You have not made any transactions yet',
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              color: context.appColors.text,
+            ),
+            8.verticalSpace,
+            BuildText(
+              text:
+                  'You can make your first transaction by clicking the button below or by inviting your friends',
+              fontSize: 14.sp,
+              textAlign: TextAlign.center,
+              fontWeight: FontWeight.w500,
+              height: 1.5,
+              color: context.appColors.textSecondary,
+            ),
+          ],
         ),
       ),
     );
