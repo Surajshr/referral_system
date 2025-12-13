@@ -112,7 +112,6 @@ The sample code demonstrates how to integrate REST API endpoints if needed in th
 
 - Flutter SDK 3.38.0+
 - Dart SDK 3.10.0+
-- Supabase project configured
 
 ### Setup
 
@@ -126,10 +125,6 @@ The sample code demonstrates how to integrate REST API endpoints if needed in th
    dart run build_runner build --delete-conflicting-outputs
    ```
 
-3. **Configure Supabase**:
-   - Set up Supabase project credentials
-   - Configure database schema (users, wallets, transactions, referrals)
-   - Enable Supabase Auth
 
 ### Run Commands
 
@@ -152,7 +147,7 @@ flutter run --flavor production --target lib/main_production.dart
 
 ### Test Accounts
 
-#### Account Without Referral Code
+#### Account Without Referral Code (This account is created without a referral code)
 - **Email**: `xuna@test.com`
 - **Password**: `123456@aA`
 
@@ -162,7 +157,7 @@ Use this account to test:
 - Transaction sending
 - Referral code generation and sharing
 
-#### Referred Account
+#### Referred Account (This account is created with a referral code from the first account)
 - **Email**: `xuno@referred.com`
 - **Password**: `123456@aA`
 
@@ -251,6 +246,3 @@ This account was created with a referral code from the first account. Use it to 
 
 ---
 
-## License
-
-This project is private and not published.
