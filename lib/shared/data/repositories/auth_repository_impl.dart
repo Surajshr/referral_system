@@ -108,6 +108,7 @@ class AuthRepositoryImpl implements AuthRepository {
             'phone': phone,
             'password': hashedPassword,
             'referral_code': newReferralCode,
+            'referred_by': referrerId,
           })
           .select()
           .single();
@@ -117,7 +118,7 @@ class AuthRepositoryImpl implements AuthRepository {
       // Create wallet for user
       await SupabaseService.from(
         'wallet',
-      ).insert({'user_id': userId, 'balance': 0.0});
+      ).insert({'user_id': userId, 'balance': 0.0}).select().single();
 
       // If referral code provided, create referral entry
       if (referrerId != null) {

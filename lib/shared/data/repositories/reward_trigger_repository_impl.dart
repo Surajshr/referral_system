@@ -14,15 +14,14 @@ import 'package:referral_app/shared/domain/repositories/wallet_repository.dart';
 /// Implementation of RewardTriggerRepository using Supabase
 class RewardTriggerRepositoryImpl implements RewardTriggerRepository {
   RewardTriggerRepositoryImpl({
-    required WalletRepository walletRepository,
     required TransactionRepository transactionRepository,
+    required WalletRepository walletRepository,
     required ReferralRepository referralRepository,
-  }) : _walletRepository = walletRepository,
-       _transactionRepository = transactionRepository,
+  }) : _transactionRepository = transactionRepository,
+       _walletRepository = walletRepository,
        _referralRepository = referralRepository;
-
-  final WalletRepository _walletRepository;
   final TransactionRepository _transactionRepository;
+  final WalletRepository _walletRepository;
   final ReferralRepository _referralRepository;
 
   @override
@@ -30,6 +29,8 @@ class RewardTriggerRepositoryImpl implements RewardTriggerRepository {
     required String referredUserId,
     required double referrerRewardAmount,
     required double referredRewardAmount,
+    required String referrerUserEmail,
+    required String referredUserEmail,
   }) async {
     try {
       // Validate amounts
@@ -104,10 +105,13 @@ class RewardTriggerRepositoryImpl implements RewardTriggerRepository {
         );
       }
 
-      // 2. Credit wallet for referrer (User A)
+      // 2. Credit wallet for referrer (User A) with transaction record
       final referrerCreditResult = await _walletRepository.creditWallet(
         userId: referrerId,
         amount: referrerRewardAmount,
+        transactionType: TransactionType.referralReward,
+        referralId: referral.id,
+        description: 'Reward for successful referral',
       );
 
       if (referrerCreditResult.isLeft()) {
@@ -122,10 +126,13 @@ class RewardTriggerRepositoryImpl implements RewardTriggerRepository {
         );
       }
 
-      // 3. Credit wallet for referred user (User B)
+      // 3. Credit wallet for referred user (User B) with transaction record
       final referredCreditResult = await _walletRepository.creditWallet(
         userId: referredUserId,
         amount: referredRewardAmount,
+        transactionType: TransactionType.firstTransactionReward,
+        referralId: referral.id,
+        description: 'Welcome reward for first transaction',
       );
 
       if (referredCreditResult.isLeft()) {
@@ -152,6 +159,7 @@ class RewardTriggerRepositoryImpl implements RewardTriggerRepository {
         type: TransactionType.firstTransactionReward,
         referralId: referral.id,
         description: 'Reward for successful referral',
+        transactionToUserEmail: referrerUserEmail,
       );
 
       referrerTxnResult.fold(
@@ -171,6 +179,7 @@ class RewardTriggerRepositoryImpl implements RewardTriggerRepository {
         type: TransactionType.firstTransactionReward,
         referralId: referral.id,
         description: 'Welcome reward for first transaction',
+        transactionToUserEmail: referredUserEmail,
       );
 
       referredTxnResult.fold(
@@ -236,7 +245,7 @@ class RewardTriggerRepositoryImpl implements RewardTriggerRepository {
 
   @override
   Future<Either<AppException, String?>> getReferrerUserId(
-    String referredUserId,
+    String referredUserId, //user id of currently logged in user
   ) async {
     try {
       final referralData = await SupabaseService.from('referrals')
@@ -254,6 +263,31 @@ class RewardTriggerRepositoryImpl implements RewardTriggerRepository {
     } catch (e, s) {
       developer.log(
         'Failed to get referrer user ID',
+        name: 'RewardTriggerRepository',
+        error: e,
+        stackTrace: s,
+        level: 1000,
+      );
+      return Left(ExceptionHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<Either<AppException, String?>> getUserEmail(String userId) async {
+    try {
+      final userData = await SupabaseService.from(
+        'users',
+      ).select('email').eq('id', userId).maybeSingle();
+
+      if (userData == null) {
+        return const Right(null);
+      }
+
+      final email = userData['email'] as String;
+      return Right(email);
+    } catch (e, s) {
+      developer.log(
+        'Failed to get user email',
         name: 'RewardTriggerRepository',
         error: e,
         stackTrace: s,

@@ -10,6 +10,8 @@ abstract class TransactionRepository {
     required TransactionType type,
     String? referralId,
     String? description,
+    required String
+    transactionToUserEmail, // the email of the user who is receiving the transaction
   });
 
   /// Get transaction history for a user
@@ -34,4 +36,9 @@ abstract class TransactionRepository {
 
   /// Get total earnings from referrals
   Future<Either<AppException, double>> getTotalReferralEarnings(String userId);
+
+  /// Check if this is the user's first transaction
+  ///
+  /// Returns true if user has no previous transactions, false otherwise
+  Future<Either<AppException, bool>> isFirstTransaction(String userId);
 }

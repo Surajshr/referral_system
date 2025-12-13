@@ -1,10 +1,17 @@
 import 'package:referral_app/app/view/app_imports.dart';
+import 'package:referral_app/feature/dashboard/presentation/widgets/activity_card.dart';
+import 'package:referral_app/shared/data/models/transaction_model.dart';
 
 class RecentActivitySection extends StatelessWidget {
-  const RecentActivitySection({super.key});
+  const RecentActivitySection({super.key, required this.transactions});
+
+  final List<TransactionModel> transactions;
 
   @override
   Widget build(BuildContext context) {
+    // Show only the 3 most recent transactions
+    final recentTransactions = transactions.take(3).toList();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,7 +25,12 @@ class RecentActivitySection extends StatelessWidget {
               color: context.appColors.text,
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                context.push(
+                  RouteName.allTransactionsScreen,
+                  extra: transactions,
+                );
+              },
               child: BuildText(
                 text: 'View All',
                 fontSize: 14.sp,
@@ -29,136 +41,36 @@ class RecentActivitySection extends StatelessWidget {
           ],
         ),
         12.verticalSpace,
-        const _ActivityCard(
-          icon: ImageConstants.trophyIcon,
-          title: 'Referral Bonus',
-          subtitle: 'From John Doe',
-          time: '2 hours ago',
-          amount: '+\$20',
-          isPositive: true,
-        ),
-        12.verticalSpace,
-        const _ActivityCard(
-          icon: ImageConstants.transactionIcon,
-          title: 'First Transaction',
-          subtitle: 'Completed',
-          time: '1 day ago',
-          amount: '+\$20',
-          isPositive: true,
-        ),
-        12.verticalSpace,
-        const _ActivityCard(
-          icon: ImageConstants.piggyBankIcon,
-          title: 'Referral Pending',
-          subtitle: 'Jane Smith',
-          time: '2 days ago',
-          amount: 'Pending',
-          isPositive: false,
-        ),
+        if (recentTransactions.isEmpty)
+          _buildEmptyState(context)
+        else
+          ...recentTransactions.asMap().entries.map(
+            (entry) => Padding(
+              padding: EdgeInsets.only(
+                bottom: entry.key < recentTransactions.length - 1 ? 12.h : 0,
+              ),
+              child: ActivityCard.fromTransaction(transaction: entry.value),
+            ),
+          ),
       ],
     );
   }
-}
 
-class _ActivityCard extends StatelessWidget {
-  const _ActivityCard({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.time,
-    required this.amount,
-    required this.isPositive,
-  });
-
-  final String icon;
-  final String title;
-  final String subtitle;
-  final String time;
-  final String amount;
-  final bool isPositive;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildEmptyState(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.r),
+      padding: EdgeInsets.all(24.r),
       decoration: BoxDecoration(
         color: context.appColors.surface,
         borderRadius: BorderRadius.circular(14.r),
         border: Border.all(color: context.appColors.border, width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: context.appColors.shadow.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
       ),
-      child: Row(
-        children: [
-          Container(
-            width: 48.w,
-            height: 48.h,
-            padding: EdgeInsets.all(10.r),
-            decoration: BoxDecoration(
-              color: isPositive
-                  ? context.appColors.success.withValues(alpha: 0.1)
-                  : context.appColors.warning.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: Image.asset(
-              icon,
-              color: isPositive
-                  ? context.appColors.success
-                  : context.appColors.warning,
-              cacheWidth: (48.w * 3).toInt(),
-              cacheHeight: (48.h * 3).toInt(),
-            ),
-          ),
-          12.horizontalSpace,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BuildText(
-                  text: title,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
-                  color: context.appColors.text,
-                ),
-                4.verticalSpace,
-                Row(
-                  children: [
-                    BuildText(
-                      text: subtitle,
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w500,
-                      color: context.appColors.textSecondary,
-                    ),
-                    BuildText(
-                      text: ' • ',
-                      fontSize: 13.sp,
-                      color: context.appColors.textMuted,
-                    ),
-                    BuildText(
-                      text: time,
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w500,
-                      color: context.appColors.textMuted,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          BuildText(
-            text: amount,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w700,
-            color: isPositive
-                ? context.appColors.success
-                : context.appColors.warning,
-          ),
-        ],
+      child: Center(
+        child: BuildText(
+          text: 'No recent activity',
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w500,
+          color: context.appColors.textSecondary,
+        ),
       ),
     );
   }

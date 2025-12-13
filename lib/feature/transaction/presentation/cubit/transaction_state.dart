@@ -11,5 +11,6 @@ abstract class TransactionState with _$TransactionState {
     @Default('') String selectedQuickAmount,
     String? errorMessage,
     String? successMessage,
+    @Default(EmailFormz.pure()) EmailFormz email,
   }) = _TransactionState;
 }

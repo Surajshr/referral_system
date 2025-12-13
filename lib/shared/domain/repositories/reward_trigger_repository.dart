@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:referral_app/core/exceptions/app_exception.dart';
 
-/// Abstract repository for reward trigger operations
 abstract class RewardTriggerRepository {
   /// Trigger first transaction reward for a referred user
   ///
@@ -15,6 +14,8 @@ abstract class RewardTriggerRepository {
     required String referredUserId,
     required double referrerRewardAmount,
     required double referredRewardAmount,
+    required String referrerUserEmail,
+    required String referredUserEmail,
   });
 
   /// Check if user is eligible for first transaction reward
@@ -26,4 +27,7 @@ abstract class RewardTriggerRepository {
   Future<Either<AppException, String?>> getReferrerUserId(
     String referredUserId,
   );
+
+  /// Get user email by user ID
+  Future<Either<AppException, String?>> getUserEmail(String userId);
 }

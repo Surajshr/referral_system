@@ -7,7 +7,6 @@ part 'wallet_model.g.dart';
 @freezed
 abstract class WalletModel with _$WalletModel {
   const factory WalletModel({
-    required String id,
     @JsonKey(name: 'user_id') required String userId,
     required double balance,
     @JsonKey(name: 'created_at') required DateTime createdAt,

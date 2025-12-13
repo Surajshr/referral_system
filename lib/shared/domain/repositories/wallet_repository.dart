@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:referral_app/core/exceptions/app_exception.dart';
+import 'package:referral_app/shared/data/models/transaction_model.dart';
 import 'package:referral_app/shared/data/models/wallet_model.dart';
 
 /// Abstract repository for wallet operations
@@ -13,17 +14,25 @@ abstract class WalletRepository {
   /// Credit wallet with amount
   ///
   /// Returns updated wallet
+  /// [transactionType] - If provided, creates a transaction record with this type
   Future<Either<AppException, WalletModel>> creditWallet({
     required String userId,
     required double amount,
+    TransactionType? transactionType,
+    String? referralId,
+    String? description,
   });
 
   /// Debit wallet with amount
   ///
   /// Returns updated wallet
+  /// [transactionType] - If provided, creates a transaction record with this type
   Future<Either<AppException, WalletModel>> debitWallet({
     required String userId,
     required double amount,
+    TransactionType? transactionType,
+    String? referralId,
+    String? description,
   });
 
   /// Create a new wallet for user

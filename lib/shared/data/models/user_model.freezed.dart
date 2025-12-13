@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- String get id;@JsonKey(name: 'full_name') String get fullName; String get email; String get phone;@JsonKey(name: 'referral_code') String get referralCode;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'updated_at') DateTime? get updatedAt;
+ String get id;@JsonKey(name: 'full_name') String get fullName; String get email; String get phone;@JsonKey(name: 'referral_code') String get referralCode;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'updated_at') DateTime? get updatedAt;@JsonKey(name: 'referred_by') String? get referredBy;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.referralCode, referralCode) || other.referralCode == referralCode)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.referralCode, referralCode) || other.referralCode == referralCode)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.referredBy, referredBy) || other.referredBy == referredBy));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,fullName,email,phone,referralCode,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,fullName,email,phone,referralCode,createdAt,updatedAt,referredBy);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, fullName: $fullName, email: $email, phone: $phone, referralCode: $referralCode, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'UserModel(id: $id, fullName: $fullName, email: $email, phone: $phone, referralCode: $referralCode, createdAt: $createdAt, updatedAt: $updatedAt, referredBy: $referredBy)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'full_name') String fullName, String email, String phone,@JsonKey(name: 'referral_code') String referralCode,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime? updatedAt
+ String id,@JsonKey(name: 'full_name') String fullName, String email, String phone,@JsonKey(name: 'referral_code') String referralCode,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime? updatedAt,@JsonKey(name: 'referred_by') String? referredBy
 });
 
 
@@ -65,7 +65,7 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? fullName = null,Object? email = null,Object? phone = null,Object? referralCode = null,Object? createdAt = null,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? fullName = null,Object? email = null,Object? phone = null,Object? referralCode = null,Object? createdAt = null,Object? updatedAt = freezed,Object? referredBy = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,8 @@ as String,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to
 as String,referralCode: null == referralCode ? _self.referralCode : referralCode // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,referredBy: freezed == referredBy ? _self.referredBy : referredBy // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -159,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'full_name')  String fullName,  String email,  String phone, @JsonKey(name: 'referral_code')  String referralCode, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'full_name')  String fullName,  String email,  String phone, @JsonKey(name: 'referral_code')  String referralCode, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime? updatedAt, @JsonKey(name: 'referred_by')  String? referredBy)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.fullName,_that.email,_that.phone,_that.referralCode,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.fullName,_that.email,_that.phone,_that.referralCode,_that.createdAt,_that.updatedAt,_that.referredBy);case _:
   return orElse();
 
 }
@@ -180,10 +181,10 @@ return $default(_that.id,_that.fullName,_that.email,_that.phone,_that.referralCo
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'full_name')  String fullName,  String email,  String phone, @JsonKey(name: 'referral_code')  String referralCode, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'full_name')  String fullName,  String email,  String phone, @JsonKey(name: 'referral_code')  String referralCode, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime? updatedAt, @JsonKey(name: 'referred_by')  String? referredBy)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.id,_that.fullName,_that.email,_that.phone,_that.referralCode,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.fullName,_that.email,_that.phone,_that.referralCode,_that.createdAt,_that.updatedAt,_that.referredBy);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +201,10 @@ return $default(_that.id,_that.fullName,_that.email,_that.phone,_that.referralCo
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'full_name')  String fullName,  String email,  String phone, @JsonKey(name: 'referral_code')  String referralCode, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'full_name')  String fullName,  String email,  String phone, @JsonKey(name: 'referral_code')  String referralCode, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime? updatedAt, @JsonKey(name: 'referred_by')  String? referredBy)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.fullName,_that.email,_that.phone,_that.referralCode,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.fullName,_that.email,_that.phone,_that.referralCode,_that.createdAt,_that.updatedAt,_that.referredBy);case _:
   return null;
 
 }
@@ -215,7 +216,7 @@ return $default(_that.id,_that.fullName,_that.email,_that.phone,_that.referralCo
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.id, @JsonKey(name: 'full_name') required this.fullName, required this.email, required this.phone, @JsonKey(name: 'referral_code') required this.referralCode, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') this.updatedAt});
+  const _UserModel({required this.id, @JsonKey(name: 'full_name') required this.fullName, required this.email, required this.phone, @JsonKey(name: 'referral_code') required this.referralCode, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') this.updatedAt, @JsonKey(name: 'referred_by') this.referredBy});
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
@@ -225,6 +226,7 @@ class _UserModel implements UserModel {
 @override@JsonKey(name: 'referral_code') final  String referralCode;
 @override@JsonKey(name: 'created_at') final  DateTime createdAt;
 @override@JsonKey(name: 'updated_at') final  DateTime? updatedAt;
+@override@JsonKey(name: 'referred_by') final  String? referredBy;
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
@@ -239,16 +241,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.referralCode, referralCode) || other.referralCode == referralCode)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.referralCode, referralCode) || other.referralCode == referralCode)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.referredBy, referredBy) || other.referredBy == referredBy));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,fullName,email,phone,referralCode,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,fullName,email,phone,referralCode,createdAt,updatedAt,referredBy);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, fullName: $fullName, email: $email, phone: $phone, referralCode: $referralCode, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'UserModel(id: $id, fullName: $fullName, email: $email, phone: $phone, referralCode: $referralCode, createdAt: $createdAt, updatedAt: $updatedAt, referredBy: $referredBy)';
 }
 
 
@@ -259,7 +261,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'full_name') String fullName, String email, String phone,@JsonKey(name: 'referral_code') String referralCode,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime? updatedAt
+ String id,@JsonKey(name: 'full_name') String fullName, String email, String phone,@JsonKey(name: 'referral_code') String referralCode,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime? updatedAt,@JsonKey(name: 'referred_by') String? referredBy
 });
 
 
@@ -276,7 +278,7 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? fullName = null,Object? email = null,Object? phone = null,Object? referralCode = null,Object? createdAt = null,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? fullName = null,Object? email = null,Object? phone = null,Object? referralCode = null,Object? createdAt = null,Object? updatedAt = freezed,Object? referredBy = freezed,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
@@ -285,7 +287,8 @@ as String,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to
 as String,referralCode: null == referralCode ? _self.referralCode : referralCode // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,referredBy: freezed == referredBy ? _self.referredBy : referredBy // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

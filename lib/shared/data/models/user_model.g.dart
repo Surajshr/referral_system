@@ -16,6 +16,7 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   updatedAt: json['updated_at'] == null
       ? null
       : DateTime.parse(json['updated_at'] as String),
+  referredBy: json['referred_by'] as String?,
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
@@ -27,4 +28,5 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'referral_code': instance.referralCode,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
+      'referred_by': instance.referredBy,
     };

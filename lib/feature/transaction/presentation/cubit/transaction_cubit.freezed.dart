@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TransactionState {
 
- String get recipient; String get amount; String get note; bool get showNoteField; bool get isLoading; String get selectedQuickAmount; String? get errorMessage; String? get successMessage;
+ String get recipient; String get amount; String get note; bool get showNoteField; bool get isLoading; String get selectedQuickAmount; String? get errorMessage; String? get successMessage; EmailFormz get email;
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $TransactionStateCopyWith<TransactionState> get copyWith => _$TransactionStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionState&&(identical(other.recipient, recipient) || other.recipient == recipient)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.note, note) || other.note == note)&&(identical(other.showNoteField, showNoteField) || other.showNoteField == showNoteField)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.selectedQuickAmount, selectedQuickAmount) || other.selectedQuickAmount == selectedQuickAmount)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.successMessage, successMessage) || other.successMessage == successMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionState&&(identical(other.recipient, recipient) || other.recipient == recipient)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.note, note) || other.note == note)&&(identical(other.showNoteField, showNoteField) || other.showNoteField == showNoteField)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.selectedQuickAmount, selectedQuickAmount) || other.selectedQuickAmount == selectedQuickAmount)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.successMessage, successMessage) || other.successMessage == successMessage)&&(identical(other.email, email) || other.email == email));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,recipient,amount,note,showNoteField,isLoading,selectedQuickAmount,errorMessage,successMessage);
+int get hashCode => Object.hash(runtimeType,recipient,amount,note,showNoteField,isLoading,selectedQuickAmount,errorMessage,successMessage,email);
 
 @override
 String toString() {
-  return 'TransactionState(recipient: $recipient, amount: $amount, note: $note, showNoteField: $showNoteField, isLoading: $isLoading, selectedQuickAmount: $selectedQuickAmount, errorMessage: $errorMessage, successMessage: $successMessage)';
+  return 'TransactionState(recipient: $recipient, amount: $amount, note: $note, showNoteField: $showNoteField, isLoading: $isLoading, selectedQuickAmount: $selectedQuickAmount, errorMessage: $errorMessage, successMessage: $successMessage, email: $email)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $TransactionStateCopyWith<$Res>  {
   factory $TransactionStateCopyWith(TransactionState value, $Res Function(TransactionState) _then) = _$TransactionStateCopyWithImpl;
 @useResult
 $Res call({
- String recipient, String amount, String note, bool showNoteField, bool isLoading, String selectedQuickAmount, String? errorMessage, String? successMessage
+ String recipient, String amount, String note, bool showNoteField, bool isLoading, String selectedQuickAmount, String? errorMessage, String? successMessage, EmailFormz email
 });
 
 
@@ -62,7 +62,7 @@ class _$TransactionStateCopyWithImpl<$Res>
 
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? recipient = null,Object? amount = null,Object? note = null,Object? showNoteField = null,Object? isLoading = null,Object? selectedQuickAmount = null,Object? errorMessage = freezed,Object? successMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? recipient = null,Object? amount = null,Object? note = null,Object? showNoteField = null,Object? isLoading = null,Object? selectedQuickAmount = null,Object? errorMessage = freezed,Object? successMessage = freezed,Object? email = null,}) {
   return _then(_self.copyWith(
 recipient: null == recipient ? _self.recipient : recipient // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
@@ -72,7 +72,8 @@ as bool,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: ca
 as bool,selectedQuickAmount: null == selectedQuickAmount ? _self.selectedQuickAmount : selectedQuickAmount // ignore: cast_nullable_to_non_nullable
 as String,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,successMessage: freezed == successMessage ? _self.successMessage : successMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as EmailFormz,
   ));
 }
 
@@ -157,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String recipient,  String amount,  String note,  bool showNoteField,  bool isLoading,  String selectedQuickAmount,  String? errorMessage,  String? successMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String recipient,  String amount,  String note,  bool showNoteField,  bool isLoading,  String selectedQuickAmount,  String? errorMessage,  String? successMessage,  EmailFormz email)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TransactionState() when $default != null:
-return $default(_that.recipient,_that.amount,_that.note,_that.showNoteField,_that.isLoading,_that.selectedQuickAmount,_that.errorMessage,_that.successMessage);case _:
+return $default(_that.recipient,_that.amount,_that.note,_that.showNoteField,_that.isLoading,_that.selectedQuickAmount,_that.errorMessage,_that.successMessage,_that.email);case _:
   return orElse();
 
 }
@@ -178,10 +179,10 @@ return $default(_that.recipient,_that.amount,_that.note,_that.showNoteField,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String recipient,  String amount,  String note,  bool showNoteField,  bool isLoading,  String selectedQuickAmount,  String? errorMessage,  String? successMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String recipient,  String amount,  String note,  bool showNoteField,  bool isLoading,  String selectedQuickAmount,  String? errorMessage,  String? successMessage,  EmailFormz email)  $default,) {final _that = this;
 switch (_that) {
 case _TransactionState():
-return $default(_that.recipient,_that.amount,_that.note,_that.showNoteField,_that.isLoading,_that.selectedQuickAmount,_that.errorMessage,_that.successMessage);case _:
+return $default(_that.recipient,_that.amount,_that.note,_that.showNoteField,_that.isLoading,_that.selectedQuickAmount,_that.errorMessage,_that.successMessage,_that.email);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +199,10 @@ return $default(_that.recipient,_that.amount,_that.note,_that.showNoteField,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String recipient,  String amount,  String note,  bool showNoteField,  bool isLoading,  String selectedQuickAmount,  String? errorMessage,  String? successMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String recipient,  String amount,  String note,  bool showNoteField,  bool isLoading,  String selectedQuickAmount,  String? errorMessage,  String? successMessage,  EmailFormz email)?  $default,) {final _that = this;
 switch (_that) {
 case _TransactionState() when $default != null:
-return $default(_that.recipient,_that.amount,_that.note,_that.showNoteField,_that.isLoading,_that.selectedQuickAmount,_that.errorMessage,_that.successMessage);case _:
+return $default(_that.recipient,_that.amount,_that.note,_that.showNoteField,_that.isLoading,_that.selectedQuickAmount,_that.errorMessage,_that.successMessage,_that.email);case _:
   return null;
 
 }
@@ -213,7 +214,7 @@ return $default(_that.recipient,_that.amount,_that.note,_that.showNoteField,_tha
 
 
 class _TransactionState implements TransactionState {
-  const _TransactionState({this.recipient = '', this.amount = '', this.note = '', this.showNoteField = false, this.isLoading = false, this.selectedQuickAmount = '', this.errorMessage, this.successMessage});
+  const _TransactionState({this.recipient = '', this.amount = '', this.note = '', this.showNoteField = false, this.isLoading = false, this.selectedQuickAmount = '', this.errorMessage, this.successMessage, this.email = const EmailFormz.pure()});
   
 
 @override@JsonKey() final  String recipient;
@@ -224,6 +225,7 @@ class _TransactionState implements TransactionState {
 @override@JsonKey() final  String selectedQuickAmount;
 @override final  String? errorMessage;
 @override final  String? successMessage;
+@override@JsonKey() final  EmailFormz email;
 
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +237,16 @@ _$TransactionStateCopyWith<_TransactionState> get copyWith => __$TransactionStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionState&&(identical(other.recipient, recipient) || other.recipient == recipient)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.note, note) || other.note == note)&&(identical(other.showNoteField, showNoteField) || other.showNoteField == showNoteField)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.selectedQuickAmount, selectedQuickAmount) || other.selectedQuickAmount == selectedQuickAmount)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.successMessage, successMessage) || other.successMessage == successMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionState&&(identical(other.recipient, recipient) || other.recipient == recipient)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.note, note) || other.note == note)&&(identical(other.showNoteField, showNoteField) || other.showNoteField == showNoteField)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.selectedQuickAmount, selectedQuickAmount) || other.selectedQuickAmount == selectedQuickAmount)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.successMessage, successMessage) || other.successMessage == successMessage)&&(identical(other.email, email) || other.email == email));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,recipient,amount,note,showNoteField,isLoading,selectedQuickAmount,errorMessage,successMessage);
+int get hashCode => Object.hash(runtimeType,recipient,amount,note,showNoteField,isLoading,selectedQuickAmount,errorMessage,successMessage,email);
 
 @override
 String toString() {
-  return 'TransactionState(recipient: $recipient, amount: $amount, note: $note, showNoteField: $showNoteField, isLoading: $isLoading, selectedQuickAmount: $selectedQuickAmount, errorMessage: $errorMessage, successMessage: $successMessage)';
+  return 'TransactionState(recipient: $recipient, amount: $amount, note: $note, showNoteField: $showNoteField, isLoading: $isLoading, selectedQuickAmount: $selectedQuickAmount, errorMessage: $errorMessage, successMessage: $successMessage, email: $email)';
 }
 
 
@@ -255,7 +257,7 @@ abstract mixin class _$TransactionStateCopyWith<$Res> implements $TransactionSta
   factory _$TransactionStateCopyWith(_TransactionState value, $Res Function(_TransactionState) _then) = __$TransactionStateCopyWithImpl;
 @override @useResult
 $Res call({
- String recipient, String amount, String note, bool showNoteField, bool isLoading, String selectedQuickAmount, String? errorMessage, String? successMessage
+ String recipient, String amount, String note, bool showNoteField, bool isLoading, String selectedQuickAmount, String? errorMessage, String? successMessage, EmailFormz email
 });
 
 
@@ -272,7 +274,7 @@ class __$TransactionStateCopyWithImpl<$Res>
 
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? recipient = null,Object? amount = null,Object? note = null,Object? showNoteField = null,Object? isLoading = null,Object? selectedQuickAmount = null,Object? errorMessage = freezed,Object? successMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? recipient = null,Object? amount = null,Object? note = null,Object? showNoteField = null,Object? isLoading = null,Object? selectedQuickAmount = null,Object? errorMessage = freezed,Object? successMessage = freezed,Object? email = null,}) {
   return _then(_TransactionState(
 recipient: null == recipient ? _self.recipient : recipient // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
@@ -282,7 +284,8 @@ as bool,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: ca
 as bool,selectedQuickAmount: null == selectedQuickAmount ? _self.selectedQuickAmount : selectedQuickAmount // ignore: cast_nullable_to_non_nullable
 as String,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,successMessage: freezed == successMessage ? _self.successMessage : successMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as EmailFormz,
   ));
 }
 

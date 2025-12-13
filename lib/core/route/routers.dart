@@ -33,5 +33,12 @@ final GoRouter router = GoRouter(
       path: RouteName.profileBaseScreen,
       builder: (context, state) => const ProfileBaseView(),
     ),
+    GoRoute(
+      path: RouteName.allTransactionsScreen,
+      builder: (context, state) {
+        final transactions = state.extra as List<TransactionModel>? ?? [];
+        return AllTransactionScreen(transactions: transactions);
+      },
+    ),
   ],
 );

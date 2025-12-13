@@ -7,6 +7,12 @@ import 'package:referral_app/feature/auth/signIn/domain/usecase/signin_usecase.d
 import 'package:referral_app/feature/auth/signup/data/repository_impl/signup_repository_impl.dart';
 import 'package:referral_app/feature/auth/signup/domain/repository/signup_repository.dart';
 import 'package:referral_app/feature/auth/signup/domain/usecase/signup_usecase.dart';
+import 'package:referral_app/feature/dashboard/data/repositories/dashboard_repository_impl.dart';
+import 'package:referral_app/feature/dashboard/domain/repositories/dashboard_repository.dart';
+import 'package:referral_app/feature/dashboard/domain/usecases/dashboard_usecase.dart';
+import 'package:referral_app/feature/transaction/data/repositories/transaction_ui_repository_impl.dart';
+import 'package:referral_app/feature/transaction/domain/repositories/transaction_ui_repository.dart';
+import 'package:referral_app/feature/transaction/domain/usecases/transaction/transaction_usecase.dart';
 
 import 'package:referral_app/shared/data/repositories/auth_repository_impl.dart';
 import 'package:referral_app/shared/data/repositories/referral_repository_impl.dart';
@@ -27,7 +33,6 @@ Future<void> initDependencies() async {
 }
 
 Future<void> _initCriticalDependencies() async {
-  // Register secure storage service
   di.registerLazySingleton<SecureStorageService>(
     () => SecureStorageService(
       const FlutterSecureStorage(
@@ -35,29 +40,20 @@ Future<void> _initCriticalDependencies() async {
       ),
     ),
   );
-
-  // Register repositories
-  _registerRepositories();
 }
 
-void _registerRepositories() {
-  // Register WalletRepository
+void _initNonCriticalDependencies() {
   di.registerLazySingleton<WalletRepository>(() => WalletRepositoryImpl());
 
-  // Register TransactionRepository
   di.registerLazySingleton<TransactionRepository>(
-    () => TransactionRepositoryImpl(),
+    () => TransactionRepositoryImpl(walletRepository: di<WalletRepository>()),
   );
 
-  // Register ReferralRepository
   di.registerLazySingleton<ReferralRepository>(() => ReferralRepositoryImpl());
 
-  // Register AuthRepository
   di.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(secureStorage: di<SecureStorageService>()),
   );
-
-  // Register RewardTriggerRepository
   di.registerLazySingleton<RewardTriggerRepository>(
     () => RewardTriggerRepositoryImpl(
       walletRepository: di<WalletRepository>(),
@@ -70,23 +66,39 @@ void _registerRepositories() {
     () => SignInRepositoryImpl(authRepository: di<AuthRepository>()),
   );
 
-  // Register SignInUseCase
   di.registerLazySingleton<SignInUseCase>(
     () => SignInUseCase(di<SignInRepository>()),
   );
-  // Register SignUpRepository
+
   di.registerLazySingleton<SignUpRepository>(
     () => SignUpRepositoryImpl(authRepository: di<AuthRepository>()),
   );
-  // Register SignUpUseCase
+
   di.registerLazySingleton<SignUpUseCase>(
     () => SignUpUseCase(di<SignUpRepository>()),
   );
-}
-
-void _initNonCriticalDependencies() {
-  // Register external services here
-  // Example: Analytics, Crash reporting, etc.
+  di.registerLazySingleton<DashboardRepository>(
+    () => DashboardRepositoryImpl(
+      walletRepository: di<WalletRepository>(),
+      referralRepository: di<ReferralRepository>(),
+      transactionRepository: di<TransactionRepository>(),
+    ),
+  );
+  di.registerLazySingleton<DashboardUsecase>(
+    () => DashboardUsecase(di<DashboardRepository>()),
+  );
+  di.registerLazySingleton<TransactionUIRepository>(
+    () => TransactionUIRepositoryImpl(
+      transactionRepository: di<TransactionRepository>(),
+      rewardTriggerRepository: di<RewardTriggerRepository>(),
+    ),
+  );
+  di.registerLazySingleton<TransactionUsecase>(
+    () => TransactionUsecase(
+      di<TransactionUIRepository>(),
+      di<RewardTriggerRepository>(),
+    ),
+  );
 }
 
 void reset() {

@@ -11,4 +11,5 @@ class ImageConstants {
   static const String whiteLoaderLottie = '${_lottiePath}white_loader.json';
   static const String piggyBankIcon = '${_basePath}piggy_bank.png';
   static const String transactionIcon = '${_basePath}transaction.png';
+  static const String sendMoneyIcon = '${_basePath}send_money.png';
 }

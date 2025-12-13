@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:referral_app/core/formz/email_formz.dart';
 
 part 'transaction_cubit.freezed.dart';
 part 'transaction_state.dart';
 
 class TransactionCubit extends Cubit<TransactionState> {
   TransactionCubit() : super(const TransactionState());
-
   void updateRecipient(String recipient) {
     emit(state.copyWith(recipient: recipient, errorMessage: null));
   }
@@ -19,6 +19,11 @@ class TransactionCubit extends Cubit<TransactionState> {
         selectedQuickAmount: '',
       ),
     );
+  }
+
+  void onEmailChanged(String value) {
+    final email = EmailFormz.dirty(value.trim());
+    emit(state.copyWith(email: email));
   }
 
   void updateNote(String note) {
@@ -47,46 +52,6 @@ class TransactionCubit extends Cubit<TransactionState> {
         errorMessage: null,
       ),
     );
-  }
-
-  Future<void> sendTransaction() async {
-    // Clear previous messages
-    emit(state.copyWith(errorMessage: null, successMessage: null));
-
-    // Validation
-    if (state.recipient.isEmpty) {
-      emit(state.copyWith(errorMessage: 'Please enter recipient details'));
-      return;
-    }
-
-    final amount = double.tryParse(state.amount);
-    if (amount == null || amount < 50) {
-      emit(state.copyWith(errorMessage: 'Minimum transaction amount is \$50'));
-      return;
-    }
-
-    // Start loading
-    emit(state.copyWith(isLoading: true));
-
-    try {
-      // Simulate API call
-      await Future.delayed(const Duration(seconds: 2));
-
-      // Success
-      emit(
-        state.copyWith(
-          isLoading: false,
-          successMessage: 'Transaction successful! \$20 bonus unlocked! 🎉',
-        ),
-      );
-    } catch (e) {
-      emit(
-        state.copyWith(
-          isLoading: false,
-          errorMessage: 'Transaction failed. Please try again.',
-        ),
-      );
-    }
   }
 
   void clearMessages() {
